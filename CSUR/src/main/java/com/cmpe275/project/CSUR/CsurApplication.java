@@ -1,4 +1,4 @@
-package com.cmpe275.project.csur;
+package com.cmpe275.project.CSUR;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
