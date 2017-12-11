@@ -1,5 +1,6 @@
 package com.cmpe275.project.CSUR.model;
 
+
 import javax.persistence.*;
 
 
@@ -99,4 +100,3 @@ public class TicketDetails {
         this.sequenceNumber = sequenceNumber;
     }
 }
-

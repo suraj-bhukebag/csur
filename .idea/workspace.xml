@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03653245-48b0-4891-983b-8ffd08625faf" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/controller/HttpResponse.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/controller/TicketingController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/dao/TicketingRepository.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/services/Ticketing.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/services/TicketingService.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CSUR/dbscript.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/csur.iml" afterPath="$PROJECT_DIR$/.idea/csur.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/RunningTrains.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/Station.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/Ticket.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketPrice.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/Train.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TrainSchedule.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/Travellers.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java" afterPath="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java" />
     </list>
     <ignored path="$PROJECT_DIR$/CSUR/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,12 +21,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TicketDetails.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TicketDetails.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="32" column="138" lean-forward="false" selection-start-line="32" selection-start-column="138" selection-end-line="32" selection-end-column="138" />
-              <folding />
+            <state relative-caret-position="367">
+              <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+              <folding>
+                <element signature="e#601#602#0" expanded="true" />
+                <element signature="e#632#633#0" expanded="true" />
+                <element signature="e#1048#1049#0" expanded="true" />
+                <element signature="e#1088#1089#0" expanded="true" />
+                <element signature="e#1120#1121#0" expanded="true" />
+                <element signature="e#1150#1151#0" expanded="true" />
+                <element signature="e#1194#1195#0" expanded="true" />
+                <element signature="e#1232#1233#0" expanded="true" />
+                <element signature="e#1270#1271#0" expanded="true" />
+                <element signature="e#1304#1305#0" expanded="true" />
+                <element signature="e#1358#1359#0" expanded="true" />
+                <element signature="e#1404#1405#0" expanded="true" />
+                <element signature="e#1440#1441#0" expanded="true" />
+                <element signature="e#1472#1473#0" expanded="true" />
+                <element signature="e#1522#1523#0" expanded="true" />
+                <element signature="e#1564#1565#0" expanded="true" />
+                <element signature="e#1602#1603#0" expanded="true" />
+                <element signature="e#1636#1637#0" expanded="true" />
+                <element signature="e#1690#1691#0" expanded="true" />
+                <element signature="e#1736#1737#0" expanded="true" />
+                <element signature="e#1771#1772#0" expanded="true" />
+                <element signature="e#1802#1803#0" expanded="true" />
+                <element signature="e#1850#1851#0" expanded="true" />
+                <element signature="e#1890#1891#0" expanded="true" />
+                <element signature="e#1922#1923#0" expanded="true" />
+                <element signature="e#1950#1951#0" expanded="true" />
+                <element signature="e#1992#1993#0" expanded="true" />
+                <element signature="e#2026#2027#0" expanded="true" />
+                <element signature="e#2067#2068#0" expanded="true" />
+                <element signature="e#2104#2105#0" expanded="true" />
+                <element signature="e#2164#2165#0" expanded="true" />
+                <element signature="e#2216#2217#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -36,11 +67,21 @@
       <file leaf-file-name="UserRepository.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/dao/UserRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="7" column="21" lean-forward="false" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+            <state relative-caret-position="198">
+              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding>
                 <marker date="1512931106456" expanded="true" signature="344:379" ph="SELECT * FRO... user" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TicketPrice.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketPrice.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -101,21 +142,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CSUR/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
               <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Ticketing.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/services/Ticketing.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -158,9 +189,9 @@
         <option value="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/services/Ticketing.java" />
         <option value="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/controller/TicketingController.java" />
         <option value="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/dao/TicketingRepository.java" />
-        <option value="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java" />
         <option value="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/services/TicketingService.java" />
         <option value="$PROJECT_DIR$/CSUR/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java" />
       </list>
     </option>
   </component>
@@ -424,12 +455,12 @@
       <option name="presentableId" value="Default" />
       <updated>1512933784904</updated>
       <workItem from="1512933786554" duration="17317000" />
-      <workItem from="1513021045599" duration="813000" />
+      <workItem from="1513021045599" duration="1046000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18130000" />
+    <option name="totallyTimeSpent" value="18363000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
@@ -481,7 +512,40 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="32" column="138" lean-forward="false" selection-start-line="32" selection-start-column="138" selection-end-line="32" selection-end-column="138" />
-          <folding />
+          <folding>
+            <element signature="e#601#602#0" expanded="true" />
+            <element signature="e#632#633#0" expanded="true" />
+            <element signature="e#1048#1049#0" expanded="true" />
+            <element signature="e#1088#1089#0" expanded="true" />
+            <element signature="e#1120#1121#0" expanded="true" />
+            <element signature="e#1150#1151#0" expanded="true" />
+            <element signature="e#1194#1195#0" expanded="true" />
+            <element signature="e#1232#1233#0" expanded="true" />
+            <element signature="e#1270#1271#0" expanded="true" />
+            <element signature="e#1304#1305#0" expanded="true" />
+            <element signature="e#1358#1359#0" expanded="true" />
+            <element signature="e#1404#1405#0" expanded="true" />
+            <element signature="e#1440#1441#0" expanded="true" />
+            <element signature="e#1472#1473#0" expanded="true" />
+            <element signature="e#1522#1523#0" expanded="true" />
+            <element signature="e#1564#1565#0" expanded="true" />
+            <element signature="e#1602#1603#0" expanded="true" />
+            <element signature="e#1636#1637#0" expanded="true" />
+            <element signature="e#1690#1691#0" expanded="true" />
+            <element signature="e#1736#1737#0" expanded="true" />
+            <element signature="e#1771#1772#0" expanded="true" />
+            <element signature="e#1802#1803#0" expanded="true" />
+            <element signature="e#1850#1851#0" expanded="true" />
+            <element signature="e#1890#1891#0" expanded="true" />
+            <element signature="e#1922#1923#0" expanded="true" />
+            <element signature="e#1950#1951#0" expanded="true" />
+            <element signature="e#1992#1993#0" expanded="true" />
+            <element signature="e#2026#2027#0" expanded="true" />
+            <element signature="e#2067#2068#0" expanded="true" />
+            <element signature="e#2104#2105#0" expanded="true" />
+            <element signature="e#2164#2165#0" expanded="true" />
+            <element signature="e#2216#2217#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -611,16 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/dao/UserRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="7" column="21" lean-forward="false" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-          <folding>
-            <marker date="1512931106456" expanded="true" signature="344:379" ph="SELECT * FRO... user" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/services/Ticketing.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -683,19 +737,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="32" column="138" lean-forward="false" selection-start-line="32" selection-start-column="138" selection-end-line="32" selection-end-column="138" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CSUR/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/dao/UserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <marker date="1512931106456" expanded="true" signature="344:379" ph="SELECT * FRO... user" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketPrice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CSUR/src/main/java/com/cmpe275/project/CSUR/model/TicketDetails.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+          <folding>
+            <element signature="e#601#602#0" expanded="true" />
+            <element signature="e#632#633#0" expanded="true" />
+            <element signature="e#1048#1049#0" expanded="true" />
+            <element signature="e#1088#1089#0" expanded="true" />
+            <element signature="e#1120#1121#0" expanded="true" />
+            <element signature="e#1150#1151#0" expanded="true" />
+            <element signature="e#1194#1195#0" expanded="true" />
+            <element signature="e#1232#1233#0" expanded="true" />
+            <element signature="e#1270#1271#0" expanded="true" />
+            <element signature="e#1304#1305#0" expanded="true" />
+            <element signature="e#1358#1359#0" expanded="true" />
+            <element signature="e#1404#1405#0" expanded="true" />
+            <element signature="e#1440#1441#0" expanded="true" />
+            <element signature="e#1472#1473#0" expanded="true" />
+            <element signature="e#1522#1523#0" expanded="true" />
+            <element signature="e#1564#1565#0" expanded="true" />
+            <element signature="e#1602#1603#0" expanded="true" />
+            <element signature="e#1636#1637#0" expanded="true" />
+            <element signature="e#1690#1691#0" expanded="true" />
+            <element signature="e#1736#1737#0" expanded="true" />
+            <element signature="e#1771#1772#0" expanded="true" />
+            <element signature="e#1802#1803#0" expanded="true" />
+            <element signature="e#1850#1851#0" expanded="true" />
+            <element signature="e#1890#1891#0" expanded="true" />
+            <element signature="e#1922#1923#0" expanded="true" />
+            <element signature="e#1950#1951#0" expanded="true" />
+            <element signature="e#1992#1993#0" expanded="true" />
+            <element signature="e#2026#2027#0" expanded="true" />
+            <element signature="e#2067#2068#0" expanded="true" />
+            <element signature="e#2104#2105#0" expanded="true" />
+            <element signature="e#2164#2165#0" expanded="true" />
+            <element signature="e#2216#2217#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
