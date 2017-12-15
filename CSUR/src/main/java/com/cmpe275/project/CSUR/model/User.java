@@ -1,4 +1,4 @@
-package com.cmpe275.project.csur.model;
+package com.cmpe275.project.CSUR.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

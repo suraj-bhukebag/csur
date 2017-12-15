@@ -1,12 +1,12 @@
-package com.cmpe275.project.csur.services;
+package com.cmpe275.project.CSUR.services;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cmpe275.project.csur.dao.UserRepository;
-import com.cmpe275.project.csur.model.User;
+import com.cmpe275.project.CSUR.dao.UserRepository;
+import com.cmpe275.project.CSUR.model.User;
 
 @Service
 @Transactional

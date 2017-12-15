@@ -1,12 +1,12 @@
-package com.cmpe275.project.csur.services;
+package com.cmpe275.project.CSUR.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cmpe275.project.csur.dao.TicketingRepository;
-import com.cmpe275.project.csur.model.TicketDetails;
+import com.cmpe275.project.CSUR.dao.TicketingRepository;
+import com.cmpe275.project.CSUR.model.TicketDetails;
 
 
 @Service

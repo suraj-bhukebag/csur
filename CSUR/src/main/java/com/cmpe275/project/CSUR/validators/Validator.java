@@ -1,7 +1,7 @@
-package com.cmpe275.project.csur.validators;
+package com.cmpe275.project.CSUR.validators;
 
-import com.cmpe275.project.csur.mapper.UserResponse;
-import com.cmpe275.project.csur.model.User;
+import com.cmpe275.project.CSUR.mapper.UserResponse;
+import com.cmpe275.project.CSUR.model.User;
 
 public class Validator {
 
