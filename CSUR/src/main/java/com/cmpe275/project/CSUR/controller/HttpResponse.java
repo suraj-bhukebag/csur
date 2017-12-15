@@ -1,4 +1,4 @@
-package com.cmpe275.project.CSUR.controller;
+package com.cmpe275.project.csur.controller;
 
 
 import org.springframework.http.ResponseEntity;

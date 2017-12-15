@@ -1,6 +1,6 @@
-package com.cmpe275.project.CSUR.mapper;
+package com.cmpe275.project.csur.mapper;
 
-import com.cmpe275.project.CSUR.model.User;
+import com.cmpe275.project.csur.model.User;
 
 public class UserResponse {
 	

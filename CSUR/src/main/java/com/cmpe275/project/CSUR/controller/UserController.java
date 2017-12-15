@@ -1,4 +1,4 @@
-package com.cmpe275.project.CSUR.controller;
+package com.cmpe275.project.csur.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cmpe275.project.CSUR.mapper.UserResponse;
-import com.cmpe275.project.CSUR.model.User;
-import com.cmpe275.project.CSUR.services.UserService;
-import com.cmpe275.project.CSUR.validators.Validator;
+import com.cmpe275.project.csur.mapper.UserResponse;
+import com.cmpe275.project.csur.model.User;
+import com.cmpe275.project.csur.services.UserService;
+import com.cmpe275.project.csur.validators.Validator;
 
 @RestController
 @RequestMapping("/user")

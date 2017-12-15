@@ -1,7 +1,7 @@
-package com.cmpe275.project.CSUR.controller;
+package com.cmpe275.project.csur.controller;
 
-import com.cmpe275.project.CSUR.model.TicketDetails;
-import com.cmpe275.project.CSUR.services.TicketingService;
+import com.cmpe275.project.csur.model.TicketDetails;
+import com.cmpe275.project.csur.services.TicketingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

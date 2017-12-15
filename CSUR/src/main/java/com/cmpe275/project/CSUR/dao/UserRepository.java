@@ -1,9 +1,9 @@
-package com.cmpe275.project.CSUR.dao;
+package com.cmpe275.project.csur.dao;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import com.cmpe275.project.CSUR.model.User;
+import com.cmpe275.project.csur.model.User;
 	
 	public interface UserRepository extends CrudRepository<User, Long> {
 	

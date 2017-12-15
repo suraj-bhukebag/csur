@@ -1,6 +1,6 @@
-package com.cmpe275.project.CSUR.services;
+package com.cmpe275.project.csur.services;
 
-import com.cmpe275.project.CSUR.model.TicketDetails;
+import com.cmpe275.project.csur.model.TicketDetails;
 
 import java.util.List;
 
