@@ -1,11 +1,9 @@
 package com.cmpe275.project.CSUR.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "ticket")
 public class Ticket {
 
 	@Id
@@ -21,6 +19,12 @@ public class Ticket {
 	private String tripType;
 	private long numberOfConnections;
 	private long bookingDate;
+
+
+
+
+
+
 	public long getId() {
 		return id;
 	}
