@@ -1,4 +1,4 @@
-package com.cmpe275.project.CSUR;
+package com.cmpe275.project;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
