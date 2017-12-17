@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class TrainSchedule {
@@ -11,40 +12,74 @@ public class TrainSchedule {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private long trainId;
+
+	@OneToOne
+	private Train train;
+
 	private long stationId;
-	private String arrivalTime;
-	private String departureTime;
+
+	private String arrivaltime;
+
+	private String departuretime;
+
+	private long arvtime;
+
+	private long deptime;
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getTrainId() {
-		return trainId;
+
+	public Train getTrain() {
+		return train;
 	}
-	public void setTrainId(long trainId) {
-		this.trainId = trainId;
+
+	public void setTrain(Train train) {
+		this.train = train;
 	}
+
 	public long getStationId() {
 		return stationId;
 	}
+
 	public void setStationId(long stationId) {
 		this.stationId = stationId;
 	}
-	public String getArrivalTime() {
-		return arrivalTime;
+
+	public String getArrivaltime() {
+		return arrivaltime;
 	}
-	public void setArrivalTime(String arrivalTime) {
-		this.arrivalTime = arrivalTime;
+
+	public void setArrivaltime(String arrivaltime) {
+		this.arrivaltime = arrivaltime;
 	}
-	public String getDepartureTime() {
-		return departureTime;
+
+	public String getDeparturetime() {
+		return departuretime;
 	}
-	public void setDepartureTime(String departureTime) {
-		this.departureTime = departureTime;
+
+	public void setDeparturetime(String departuretime) {
+		this.departuretime = departuretime;
 	}
-	
-	
+
+	public long getArvtime() {
+		return arvtime;
+	}
+
+	public void setArvtime(long arvtime) {
+		this.arvtime = arvtime;
+	}
+
+	public long getDeptime() {
+		return deptime;
+	}
+
+	public void setDeptime(long deptime) {
+		this.deptime = deptime;
+	}
+
 }

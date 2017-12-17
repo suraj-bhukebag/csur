@@ -1,124 +1,104 @@
 package com.cmpe275.project.CSUR.model;
 
-
-import javax.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ticketdetails")
 public class TicketDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    private long ticketId;
-    private long trainId;
-    //@Column(name = "from")
-    private String fromStation;
-    //@Column(name = "to")
-    private String toStation;
-    private String arrivalTime;
-    //@Column(name = "departureTime")
-    private String deptTime;
-    private String price;
-    //Added by Akhilesh to access all tickets for particular users.
-    private String userId;
-    private String sequenceNumber;
+	@ManyToOne
+	private Ticket ticket;
 
-    public TicketDetails(Long ticketId, Long trainId, String fromStation, String toStation, String arrivalTime, String deptTime, String price, String userId, String sequenceNumber) {
-        this.ticketId = ticketId;
-        this.trainId = trainId;
-        this.fromStation = fromStation;
-        this.toStation = toStation;
-        this.arrivalTime = arrivalTime;
-        this.deptTime = deptTime;
-        this.price = price;
-        this.userId = userId;
-        this.sequenceNumber = sequenceNumber;
-    }
+	@OneToOne
+	private Train train;
 
-    public TicketDetails() {
-    }
+	private String fromstation;
+	private String tostation;
+	private String arrivaltime;
+	private String depttime;
+	private String price;
+	private String sequencenumber;
 
-    public long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public String getUserId() {
-        return userId;
-    }
+	public Ticket getTicket() {
+		return ticket;
+	}
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
 
-    public Long getTicketId() {
-        return ticketId;
-    }
+	public Train getTrain() {
+		return train;
+	}
 
+	public void setTrain(Train train) {
+		this.train = train;
+	}
 
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
-    }
+	public String getFromstation() {
+		return fromstation;
+	}
 
-    public Long getTrainId() {
-        return trainId;
-    }
+	public void setFromstation(String fromstation) {
+		this.fromstation = fromstation;
+	}
 
-    public void setTrainId(long trainId) {
-        this.trainId = trainId;
-    }
+	public String getTostation() {
+		return tostation;
+	}
 
-    public String getFromStation() {
-        return fromStation;
-    }
+	public void setTostation(String tostation) {
+		this.tostation = tostation;
+	}
 
-    public void setFromStation(String fromStation) {
-        this.fromStation = fromStation;
-    }
+	public String getArrivaltime() {
+		return arrivaltime;
+	}
 
-    public String getToStation() {
-        return toStation;
-    }
+	public void setArrivaltime(String arrivaltime) {
+		this.arrivaltime = arrivaltime;
+	}
 
-    public void setToStation(String toStation) {
-        this.toStation = toStation;
-    }
+	public String getDepttime() {
+		return depttime;
+	}
 
-    public String getArrivalTime() {
-        return arrivalTime;
-    }
+	public void setDepttime(String depttime) {
+		this.depttime = depttime;
+	}
 
-    public void setArrivalTime(String arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
+	public String getPrice() {
+		return price;
+	}
 
-    public String getDeptTime() {
-        return deptTime;
-    }
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
-    public void setDeptTime(String deptTime) {
-        this.deptTime = deptTime;
-    }
+	public String getSequencenumber() {
+		return sequencenumber;
+	}
 
-    public String getPrice() {
-        return price;
-    }
+	public void setSequencenumber(String sequencenumber) {
+		this.sequencenumber = sequencenumber;
+	}
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(String sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
-    }
 }
