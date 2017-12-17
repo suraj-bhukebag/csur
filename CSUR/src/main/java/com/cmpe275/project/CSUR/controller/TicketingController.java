@@ -34,7 +34,7 @@ public class TicketingController {
 
     {
         System.out.println("Printing to Console");
-        System.out.println(ticketDetails.getArrivalTime());
+        //System.out.println(ticketDetails.getArrivalTime());
         ticketingService.bookTicket(ticketDetails);
         return new ResponseEntity<String>("Booked Successfully", HttpStatus.OK);
     }
