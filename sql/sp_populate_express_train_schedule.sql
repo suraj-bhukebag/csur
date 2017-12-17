@@ -20,6 +20,9 @@ BEGIN
     DECLARE st time;
     DECLARE prev_time time;
     
+    DECLARE arvTimeInt BigInt;
+    DECLARE depTimeInt BigInt;
+    
     SET targetStation = 6;
     SET counter = 1;
     SET trainIdSB = 1;
@@ -33,13 +36,13 @@ BEGIN
     
     -- Delete previous records of express train for SB trains.
     
-    DELETE FROM trainschedule
-    WHERE trainid in (SELECT id FROM train WHERE Type = 'E' AND id <= 61);
+    DELETE FROM train_schedule
+    WHERE train_id in (SELECT id FROM train WHERE Type = 'E' AND id <= 61);
     
     -- Delete previous records of express train for NB trains.
     
-    DELETE FROM trainschedule
-    WHERE trainid in (SELECT id FROM train WHERE Type = 'E' AND id > 61);
+    DELETE FROM train_schedule
+    WHERE train_id in (SELECT id FROM train WHERE Type = 'E' AND id > 61);
     
     SET prev_time = time_format('05:00:00', '%h:%i:%s');
     
@@ -51,19 +54,25 @@ BEGIN
         SET dep = st;
         SET c1 = st;
         
+        SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+        SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
+        
         -- Counter for 26 train stations and calculating their time.
         SET counter = 1;
         
-        INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(trainIdSB, counter, arv, arv);
+        INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(trainIdSB, counter, arv, dep, arvTimeInt, depTimeInt);
     
 		SET counter = counter + 5;
         
         WHILE counter <= 26 DO
             
-					SET arv = (SELECT addtime(c1, '00:37:00'));
+					SET arv = (SELECT addtime(c1, '00:25:00'));
 					SET dep = (SELECT addtime(arv, '00:03:00'));
+                    
+                    SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+					SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
 			
-					INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(trainIdSB, counter, arv, dep);
+					INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(trainIdSB, counter, arv, dep, arvTimeInt, depTimeInt);
 				
 					SET counter = counter + 5;
                     
@@ -90,19 +99,25 @@ BEGIN
         SET dep = st;
         SET c1 = st;
         
+        SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+        SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
+        
         -- Counter for 26 train stations and calculating their time.
         SET counter = 26;
         
-        INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(trainIdNB, counter, arv, arv);
+        INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(trainIdNB, counter, arv, dep, arvTimeInt, depTimeInt);
     
 		SET counter = counter - 5;
         
 			WHILE counter >= 1 DO
             
-					SET arv = (SELECT addtime(c1, '00:37:00'));
+					SET arv = (SELECT addtime(c1, '00:25:00'));
 					SET dep = (SELECT addtime(arv, '00:03:00'));
+                    
+                    SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+					SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
 			
-					INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(trainIdNB, counter, arv, dep);
+					INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(trainIdNB, counter, arv, dep, arvTimeInt, depTimeInt);
 				
 					SET counter = counter - 5;
                     
@@ -122,14 +137,14 @@ BEGIN
     DROP TABLE expressTrainsSB;
     DROP TABLE expressTrainsNB;
     
-    CREATE TEMPORARY TABLE IF NOT EXISTS trainscheduleBkp_b4_repopulations AS (SELECT *  FROM trainschedule ORDER BY 2,3);
+    CREATE TEMPORARY TABLE IF NOT EXISTS train_scheduleBkp_b4_repopulations AS (SELECT *  FROM train_schedule ORDER BY train_id,station_id);
     
-    TRUNCATE TABLE trainschedule;
+    TRUNCATE TABLE train_schedule;
     
-    INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime)
-	SELECT trainId,stationId,arrivalTime,departureTime
-	FROM trainscheduleBkp_b4_repopulations;
+    INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime)
+	SELECT train_id,station_id,arrivaltime,departuretime,arvtime,deptime
+	FROM train_scheduleBkp_b4_repopulations;
     
-    -- DROP TABLE trainscheduleBkp_b4_repopulations;
+    DROP TABLE train_scheduleBkp_b4_repopulations;
     
 END
