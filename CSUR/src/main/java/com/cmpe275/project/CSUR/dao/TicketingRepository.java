@@ -8,5 +8,5 @@ import java.util.List;
 public interface TicketingRepository extends CrudRepository<TicketDetails ,Long> {
 
 
-    List<TicketDetails> findAllByUserId(String userId);
+    //List<TicketDetails> findAllByUserId(String userId);
 }

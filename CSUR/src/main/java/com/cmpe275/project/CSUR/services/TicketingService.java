@@ -47,9 +47,9 @@ public class TicketingService implements Ticketing {
 
     }
 
-    public List<TicketDetails> getTickets(String userId) {
-        System.out.println(ticketingRepository.findAllByUserId(userId));
-        return ticketingRepository.findAllByUserId(userId);
-    }
+//    public List<TicketDetails> getTickets(String userId) {
+//        System.out.println(ticketingRepository.findAllByUserId(userId));
+//        return ticketingRepository.findAllByUserId(userId);
+//    }
 
 }

@@ -12,7 +12,7 @@ public class Validator {
 		if (user == null) {
 			userResponse.setMsg("Invalid request.");
 			isValid = false;
-		} else if (user.getFirstName() == null) {
+		} else if (user.getFirstname() == null) {
 			userResponse.setMsg("First Name cannot be empty ");
 			isValid = false;
 		} else if (user.getEmail().equals("")) {

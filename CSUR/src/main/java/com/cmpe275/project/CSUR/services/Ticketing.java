@@ -10,6 +10,6 @@ public interface Ticketing {
 
     boolean cancelTicket(long ticketId) ;
 
-    List<TicketDetails> getTickets(String userId);
+   // List<TicketDetails> getTickets(String userId);
 
 }

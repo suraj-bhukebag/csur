@@ -22,11 +22,11 @@ public class TicketingController {
     }
 
 
-    @GetMapping(value = "/{userId}/booked")
-    public ResponseEntity getTickets(@PathVariable("userId") String userId)
-    {
-        return new ResponseEntity(ticketingService.getTickets(userId), HttpStatus.OK);
-    }
+//    @GetMapping(value = "/{userId}/booked")
+//    public ResponseEntity getTickets(@PathVariable("userId") String userId)
+//    {
+//        return new ResponseEntity(ticketingService.getTickets(userId), HttpStatus.OK);
+//    }
 
 
     @PostMapping(value = "/{userId}/booked")
