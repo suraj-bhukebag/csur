@@ -8,9 +8,6 @@ import java.util.List;
 
 public class TicketMapper {
 
-
-
-    private long trainId ;
     private int numberofPassenger ;
     private String source;
     private String destination ;
@@ -27,28 +24,6 @@ public class TicketMapper {
     public TicketMapper(){
 
     };
-
-    public TicketMapper(long trainId, int numberofPassenger, String source, String destination, int price, long bookedBy, String bookingDate, String tripType, String travelingDate, List<TicketDetailMapper> ticketDetailMapper, List<TravellerMapper> travellerMapper) {
-        this.trainId = trainId;
-        this.numberofPassenger = numberofPassenger;
-        this.source = source;
-        this.destination = destination;
-        this.price = price;
-        this.bookedBy = bookedBy;
-        this.bookingDate = bookingDate;
-        this.tripType = tripType;
-        this.travelingDate = travelingDate;
-        this.ticketDetailMapper = ticketDetailMapper;
-        this.travellerMapper = travellerMapper;
-    }
-
-    public long getTrainId() {
-        return trainId;
-    }
-
-    public void setTrainId(long trainId) {
-        this.trainId = trainId;
-    }
 
     public int getNumberofPassenger() {
         return numberofPassenger;
@@ -129,9 +104,6 @@ public class TicketMapper {
     public void setTravellerMapper(List<TravellerMapper> travellerMapper) {
         this.travellerMapper = travellerMapper;
     }
-
-
-
 }
 
 

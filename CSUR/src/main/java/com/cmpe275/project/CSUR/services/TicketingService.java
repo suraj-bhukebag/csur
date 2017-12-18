@@ -81,26 +81,26 @@ public class TicketingService implements Ticketing {
 
     @Override
     public void runningTrain(TicketMapper ticketMapper) {
+        for (TicketDetailMapper ticketDetailMapper : ticketMapper.getTicketDetailMapper()) {
 
-        long runningId = ticketMapper.getTrainId()+Long.parseLong(ticketMapper.getBookingDate());
-        RunningTrains runningTrain = runningTrainRepository.findById(runningId);
-        if(runningTrain == null) {
+            long runningId = ticketDetailMapper.getTrainId() + Long.parseLong(ticketMapper.getBookingDate());
+            RunningTrains runningTrain = runningTrainRepository.findById(runningId);
+            if (runningTrain == null) {
 
-            RunningTrains runningTrains = new RunningTrains();
-            runningTrains.setId(ticketMapper.getTrainId() + Long.parseLong(ticketMapper.getBookingDate()));
-            runningTrains.setTrainId(ticketMapper.getTrainId());
-            runningTrains.setDate(Long.parseLong(ticketMapper.getBookingDate()));
-            runningTrains.setStatus("Running");
-            runningTrains.setAvailablecount(1000 - ticketMapper.getNumberofPassenger());
-            runningTrains.setTicketsbooked(ticketMapper.getNumberofPassenger());
+                RunningTrains runningTrains = new RunningTrains();
+                runningTrains.setId(ticketDetailMapper.getTrainId() + Long.parseLong(ticketMapper.getBookingDate()));
+                runningTrains.setTrainId(ticketDetailMapper.getTrainId());
+                runningTrains.setDate(Long.parseLong(ticketMapper.getBookingDate()));
+                runningTrains.setStatus("Running");
+                runningTrains.setAvailablecount(1000 - ticketMapper.getNumberofPassenger());
+                runningTrains.setTicketsbooked(ticketMapper.getNumberofPassenger());
 
-            runningTrainRepository.save(runningTrains);
-        }
-
-        else{
-            runningTrain.setAvailablecount(runningTrain.getAvailablecount() - ticketMapper.getNumberofPassenger());
-            runningTrain.setTicketsbooked(runningTrain.getTicketsbooked() + ticketMapper.getNumberofPassenger());
-            runningTrainRepository.save(runningTrain);
+                runningTrainRepository.save(runningTrains);
+            } else {
+                runningTrain.setAvailablecount(runningTrain.getAvailablecount() - ticketMapper.getNumberofPassenger());
+                runningTrain.setTicketsbooked(runningTrain.getTicketsbooked() + ticketMapper.getNumberofPassenger());
+                runningTrainRepository.save(runningTrain);
+            }
         }
 
     }
