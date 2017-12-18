@@ -1,13 +1,14 @@
 package com.cmpe275.project.dao;
 
-import com.cmpe275.project.model.TicketDetails;
+import com.cmpe275.project.model.Ticket;
 
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface TicketingRepository extends CrudRepository<TicketDetails ,Long> {
+public interface TicketingRepository extends CrudRepository<Ticket,Long> {
 
 
-    //List<TicketDetails> findAllByUserId(String userId);
+    List<Ticket> findAllByBookedBy(Long bookedBy);
+
 }

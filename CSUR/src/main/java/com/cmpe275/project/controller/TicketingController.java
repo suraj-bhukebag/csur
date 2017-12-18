@@ -3,6 +3,9 @@ package com.cmpe275.project.controller;
 import com.cmpe275.project.model.TicketDetails;
 import com.cmpe275.project.services.TicketingService;
 
+
+
+import com.cmpe275.project.CSUR.mapper.TicketMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,21 +26,25 @@ public class TicketingController {
     }
 
 
-//    @GetMapping(value = "/{userId}/booked")
-//    public ResponseEntity getTickets(@PathVariable("userId") String userId)
-//    {
-//        return new ResponseEntity(ticketingService.getTickets(userId), HttpStatus.OK);
-//    }
+    @GetMapping(value = "/{userId}/booked")
+    public ResponseEntity getTickets(@PathVariable("userId") Long userId)
+    {
+        return new ResponseEntity(ticketingService.getTickets(userId), HttpStatus.OK);
+    }
+
 
 
     @PostMapping(value = "/{userId}/booked")
-    public ResponseEntity <String> bookTcikets(@RequestBody TicketDetails ticketDetails)
+    public ResponseEntity <String> bookTcikets(@RequestBody TicketMapper ticketmapper)
 
     {
         System.out.println("Printing to Console");
         //System.out.println(ticketDetails.getArrivalTime());
-        ticketingService.bookTicket(ticketDetails);
-        return new ResponseEntity<String>("Booked Successfully", HttpStatus.OK);
+        ticketingService.bookTicket(ticketmapper);
+        ticketingService.bookTicketDetails(ticketmapper);
+        ticketingService.travellerDetails(ticketmapper);
+        ticketingService.runningTrain(ticketmapper);
+        return new ResponseEntity(ticketingService.getTickets(ticketmapper.getBookedBy()), HttpStatus.OK);
     }
 
     @PostMapping(value = "/{userId}/cancel/{tickeID}")
@@ -52,5 +59,14 @@ public class TicketingController {
         else
             return new ResponseEntity<String>("Ticket Cannot be Cancelled", HttpStatus.BAD_REQUEST);
 
+    }
+
+
+
+    @PostMapping(value = "/reset/{capacity}")
+    public ResponseEntity<String> resetSystem(@PathVariable("capacity") long capacity)
+    {
+         ticketingService.resetSystem(capacity);
+        return new ResponseEntity<String>("System is Reset with New Capacity" ,HttpStatus.OK);
     }
 }

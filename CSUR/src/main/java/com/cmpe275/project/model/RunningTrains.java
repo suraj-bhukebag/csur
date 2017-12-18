@@ -10,15 +10,31 @@ import javax.persistence.OneToOne;
 public class RunningTrains {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@OneToOne
-	private Train train;
+	//Coommented by Akhilesh
+//	@OneToOne
+//	private Train train;
+
+	private long trainId;
+
 	private long date;
 	private String status;
 	private long availablecount;
 	private long ticketsbooked;
+
+	public RunningTrains(){
+	} ;
+
+	public RunningTrains(long id, long trainId, long date, String status, long availablecount, long ticketsbooked) {
+		this.id = id;
+		this.trainId = trainId;
+		this.date = date;
+		this.status = status;
+		this.availablecount = availablecount;
+		this.ticketsbooked = ticketsbooked;
+	}
 
 	public long getId() {
 		return id;
@@ -28,12 +44,12 @@ public class RunningTrains {
 		this.id = id;
 	}
 
-	public Train getTrain() {
-		return train;
+	public long getTrainId() {
+		return trainId;
 	}
 
-	public void setTrain(Train train) {
-		this.train = train;
+	public void setTrainId(long trainId) {
+		this.trainId = trainId;
 	}
 
 	public long getDate() {
@@ -67,5 +83,4 @@ public class RunningTrains {
 	public void setTicketsbooked(long ticketsbooked) {
 		this.ticketsbooked = ticketsbooked;
 	}
-
 }
