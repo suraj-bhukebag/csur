@@ -14,17 +14,24 @@ public class Travellers {
 	private long id;
 
 	private String name;
-	@ManyToOne
-	private Ticket ticket;
+//	@ManyToOne
+//	private Ticket ticket;
+
+	private long ticketId;
 	private long age;
 	private String gender;
 
-	public long getId() {
-		return id;
+	public Travellers(){};
+
+	public Travellers(String name, long ticketId, long age, String gender) {
+		this.name = name;
+		this.ticketId = ticketId;
+		this.age = age;
+		this.gender = gender;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public long getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -35,12 +42,12 @@ public class Travellers {
 		this.name = name;
 	}
 
-	public Ticket getTicket() {
-		return ticket;
+	public long getTicketId() {
+		return ticketId;
 	}
 
-	public void setTicket(Ticket ticket) {
-		this.ticket = ticket;
+	public void setTicketId(long ticketId) {
+		this.ticketId = ticketId;
 	}
 
 	public long getAge() {
@@ -58,5 +65,4 @@ public class Travellers {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
 }
