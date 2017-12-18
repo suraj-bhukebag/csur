@@ -42,7 +42,7 @@ public class TicketingController {
         ticketingService.bookTicketDetails(ticketmapper);
         ticketingService.travellerDetails(ticketmapper);
         ticketingService.runningTrain(ticketmapper);
-        return new ResponseEntity<String>("Booked Successfully", HttpStatus.OK);
+        return new ResponseEntity(ticketingService.getTickets(ticketmapper.getBookedBy()), HttpStatus.OK);
     }
 
     @PostMapping(value = "/{userId}/cancel/{tickeID}")
