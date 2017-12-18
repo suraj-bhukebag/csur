@@ -3,13 +3,9 @@ package com.cmpe275.project.controller;
 import com.cmpe275.project.model.TicketDetails;
 import com.cmpe275.project.services.TicketingService;
 
-<<<<<<< HEAD:CSUR/src/main/java/com/cmpe275/project/CSUR/controller/TicketingController.java
+
 
 import com.cmpe275.project.CSUR.mapper.TicketMapper;
-import com.cmpe275.project.CSUR.model.TicketDetails;
-import com.cmpe275.project.CSUR.services.TicketingService;
-=======
->>>>>>> bc6bea80a13075d8d8e6b082275692de1cf22887:CSUR/src/main/java/com/cmpe275/project/controller/TicketingController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

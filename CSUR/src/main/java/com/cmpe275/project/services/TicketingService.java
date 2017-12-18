@@ -6,10 +6,10 @@ import com.cmpe275.project.CSUR.dao.TravellerRepository;
 import com.cmpe275.project.CSUR.mapper.TicketDetailMapper;
 import com.cmpe275.project.CSUR.mapper.TicketMapper;
 import com.cmpe275.project.CSUR.mapper.TravellerMapper;
-import com.cmpe275.project.CSUR.model.RunningTrains;
-import com.cmpe275.project.CSUR.model.Ticket;
-import com.cmpe275.project.CSUR.model.Travellers;
-import com.fasterxml.jackson.databind.JsonSerializer;
+
+import com.cmpe275.project.model.RunningTrains;
+import com.cmpe275.project.model.Ticket;
+import com.cmpe275.project.model.Travellers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
