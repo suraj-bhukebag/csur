@@ -1,5 +1,7 @@
 package com.cmpe275.project.CSUR.controller;
 
+
+import com.cmpe275.project.CSUR.mapper.TicketMapper;
 import com.cmpe275.project.CSUR.model.TicketDetails;
 import com.cmpe275.project.CSUR.services.TicketingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +24,23 @@ public class TicketingController {
     }
 
 
-//    @GetMapping(value = "/{userId}/booked")
-//    public ResponseEntity getTickets(@PathVariable("userId") String userId)
-//    {
-//        return new ResponseEntity(ticketingService.getTickets(userId), HttpStatus.OK);
-//    }
+    @GetMapping(value = "/{userId}/booked")
+    public ResponseEntity getTickets(@PathVariable("userId") Long userId)
+    {
+        return new ResponseEntity(ticketingService.getTickets(userId), HttpStatus.OK);
+    }
 
 
     @PostMapping(value = "/{userId}/booked")
-    public ResponseEntity <String> bookTcikets(@RequestBody TicketDetails ticketDetails)
+    public ResponseEntity <String> bookTcikets(@RequestBody TicketMapper ticketmapper)
 
     {
         System.out.println("Printing to Console");
         //System.out.println(ticketDetails.getArrivalTime());
-        ticketingService.bookTicket(ticketDetails);
+        ticketingService.bookTicket(ticketmapper);
+        ticketingService.bookTicketDetails(ticketmapper);
+        ticketingService.travellerDetails(ticketmapper);
+        ticketingService.runningTrain(ticketmapper);
         return new ResponseEntity<String>("Booked Successfully", HttpStatus.OK);
     }
 

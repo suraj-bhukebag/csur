@@ -1,6 +1,8 @@
 package com.cmpe275.project.CSUR.model;
 
 
+import com.cmpe275.project.CSUR.mapper.TicketMapper;
+
 import javax.persistence.*;
 
 import java.util.Set;
@@ -29,110 +31,109 @@ public class Ticket {
 	private String triptype;
 	private long numberofconnections;
 	private long bookingDate;
+    private long bookedBy;
+
+//  Doubt Need to be asked
+
+    // Akhilesh Commneted
+
+////	@OneToOne
+//	private User bookedby;
+//	@OneToMany(mappedBy = "ticket")
+//	private Set<Travellers> travellers;
+//	@OneToMany(mappedBy = "ticket")
+//	private Set<TicketDetails> ticketdetails;
 
 
-	@OneToOne
-	private User bookedby;
-	@OneToMany(mappedBy = "ticket")
-	private Set<Travellers> travellers;
-	@OneToMany(mappedBy = "ticket")
-	private Set<TicketDetails> ticketdetails;
+    public Ticket(){};
+
+    public Ticket(long numberofpassengers, String source, String destination, Double totalprice, long travellingdate, String triptype, long numberofconnections, long bookingDate, long bookedBy) {
+        this.numberofpassengers = numberofpassengers;
+        this.source = source;
+        this.destination = destination;
+        this.totalprice = totalprice;
+        this.travellingdate = travellingdate;
+        this.triptype = triptype;
+        this.numberofconnections = numberofconnections;
+        this.bookingDate = bookingDate;
+        this.bookedBy = bookedBy;
+    }
 
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
-	public long getNumberofpassengers() {
-		return numberofpassengers;
-	}
+    public long getNumberofpassengers() {
+        return numberofpassengers;
+    }
 
-	public void setNumberofpassengers(long numberofpassengers) {
-		this.numberofpassengers = numberofpassengers;
-	}
+    public void setNumberofpassengers(long numberofpassengers) {
+        this.numberofpassengers = numberofpassengers;
+    }
 
-	public String getSource() {
-		return source;
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public void setSource(String source) {
-		this.source = source;
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-	public String getDestination() {
-		return destination;
-	}
+    public String getDestination() {
+        return destination;
+    }
 
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
 
-	public long getBookingDate() {
-		return bookingDate;
-	}
+    public Double getTotalprice() {
+        return totalprice;
+    }
 
-	public void setBookingDate(long bookingDate) {
-		this.bookingDate = bookingDate;
-	}
+    public void setTotalprice(Double totalprice) {
+        this.totalprice = totalprice;
+    }
 
-	public Double getTotalprice() {
-		return totalprice;
-	}
+    public long getTravellingdate() {
+        return travellingdate;
+    }
 
-	public void setTotalprice(Double totalprice) {
-		this.totalprice = totalprice;
-	}
+    public void setTravellingdate(long travellingdate) {
+        this.travellingdate = travellingdate;
+    }
 
-	public User getBookedby() {
-		return bookedby;
-	}
+    public String getTriptype() {
+        return triptype;
+    }
 
-	public void setBookedby(User bookedby) {
-		this.bookedby = bookedby;
-	}
+    public void setTriptype(String triptype) {
+        this.triptype = triptype;
+    }
 
-	public long getTravellingdate() {
-		return travellingdate;
-	}
+    public long getNumberofconnections() {
+        return numberofconnections;
+    }
 
-	public void setTravellingdate(long travellingdate) {
-		this.travellingdate = travellingdate;
-	}
+    public void setNumberofconnections(long numberofconnections) {
+        this.numberofconnections = numberofconnections;
+    }
 
-	public String getTriptype() {
-		return triptype;
-	}
+    public long getBookingDate() {
+        return bookingDate;
+    }
 
-	public void setTriptype(String triptype) {
-		this.triptype = triptype;
-	}
+    public void setBookingDate(long bookingDate) {
+        this.bookingDate = bookingDate;
+    }
 
-	public long getNumberofconnections() {
-		return numberofconnections;
-	}
+    public long getBookedby() {
+        return bookedBy;
+    }
 
-	public void setNumberofconnections(long numberofconnections) {
-		this.numberofconnections = numberofconnections;
-	}
-
-	public Set<Travellers> getTravellers() {
-		return travellers;
-	}
-
-	public void setTravellers(Set<Travellers> travellers) {
-		this.travellers = travellers;
-	}
-
-	public Set<TicketDetails> getTicketdetails() {
-		return ticketdetails;
-	}
-
-	public void setTicketdetails(Set<TicketDetails> ticketdetails) {
-		this.ticketdetails = ticketdetails;
-	}
-
+    public void setBookedby(long bookedby) {
+        this.bookedBy = bookedby;
+    }
 }

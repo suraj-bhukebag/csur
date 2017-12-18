@@ -1,14 +1,16 @@
 package com.cmpe275.project.CSUR.mapper;
 
-import com.cmpe275.project.CSUR.model.TicketDetails;
-import com.cmpe275.project.CSUR.model.Travellers;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
-public class Ticket {
+
+public class TicketMapper {
 
 
 
+    private long trainId ;
     private int numberofPassenger ;
     private String source;
     private String destination ;
@@ -17,10 +19,17 @@ public class Ticket {
     private String bookingDate ;
     private String tripType;
     private String travelingDate ;
-    private List<TicketDetail> ticketDetail ;
-    private List<Traveller> traveller ;
+    @JsonProperty("ticketDetail")
+    private List<TicketDetailMapper> ticketDetailMapper;
+    @JsonProperty("traveller")
+    private List<TravellerMapper> travellerMapper;
 
-    public Ticket(int numberofPassenger, String source, String destination, int price, long bookedBy, String bookingDate, String tripType, String travelingDate, List<TicketDetail> ticketDetail, List<Traveller> traveller) {
+    public TicketMapper(){
+
+    };
+
+    public TicketMapper(long trainId, int numberofPassenger, String source, String destination, int price, long bookedBy, String bookingDate, String tripType, String travelingDate, List<TicketDetailMapper> ticketDetailMapper, List<TravellerMapper> travellerMapper) {
+        this.trainId = trainId;
         this.numberofPassenger = numberofPassenger;
         this.source = source;
         this.destination = destination;
@@ -29,8 +38,16 @@ public class Ticket {
         this.bookingDate = bookingDate;
         this.tripType = tripType;
         this.travelingDate = travelingDate;
-        this.ticketDetail = ticketDetail;
-        this.traveller = traveller;
+        this.ticketDetailMapper = ticketDetailMapper;
+        this.travellerMapper = travellerMapper;
+    }
+
+    public long getTrainId() {
+        return trainId;
+    }
+
+    public void setTrainId(long trainId) {
+        this.trainId = trainId;
     }
 
     public int getNumberofPassenger() {
@@ -97,68 +114,23 @@ public class Ticket {
         this.travelingDate = travelingDate;
     }
 
-    public List<TicketDetail> getTicketDetail() {
-        return ticketDetail;
+    public List<TicketDetailMapper> getTicketDetailMapper() {
+        return ticketDetailMapper;
     }
 
-    public void setTicketDetail(List<TicketDetail> ticketDetail) {
-        this.ticketDetail = ticketDetail;
+    public void setTicketDetailMapper(List<TicketDetailMapper> ticketDetailMapper) {
+        this.ticketDetailMapper = ticketDetailMapper;
     }
 
-    public List<Traveller> getTraveller() {
-        return traveller;
+    public List<TravellerMapper> getTravellerMapper() {
+        return travellerMapper;
     }
 
-    public void setTraveller(List<Traveller> traveller) {
-        this.traveller = traveller;
+    public void setTravellerMapper(List<TravellerMapper> travellerMapper) {
+        this.travellerMapper = travellerMapper;
     }
 
-    public class TicketDetail {
-        private String from;
-        private String to;
-        private String deptTime;
-        private String arivalTime;
-        private String sequence;
 
-
-    }
-    public class Traveller {
-
-        private String name;
-        private String gender;
-        private String age ;
-
-        public Traveller(String name, String gender, String age) {
-            this.name = name;
-            this.gender = gender;
-            this.age = age;
-        }
-
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getGender() {
-            return gender;
-        }
-
-        public void setGender(String gender) {
-            this.gender = gender;
-        }
-
-        public String getAge() {
-            return age;
-        }
-
-        public void setAge(String age) {
-            this.age = age;
-        }
-    }
 
 }
 
