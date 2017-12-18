@@ -12,6 +12,9 @@ BEGIN
     DECLARE st time;
     DECLARE prev_time time;
     
+    DECLARE arvTimeInt BigInt;
+    DECLARE depTimeInt BigInt;
+    
     DECLARE train_counter INT;
 
     SET c1 = time_format('06:00:00', '%h:%i:%s');
@@ -36,9 +39,13 @@ BEGIN
         
         -- Counter for 26 train stations and calculating their time.
         SET counter = 1;
+
+		SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+        SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
+
         
         -- First record for the train starting at SOURCE station A/Z.
-        INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(train_counter, counter, arv, dep);
+        INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(train_counter, counter, arv, dep, arvTimeInt, depTimeInt);
         
         SET counter = counter + 1;
 
@@ -46,7 +53,10 @@ BEGIN
 			SET arv = (SELECT addtime(c1, '00:05:00'));
 			SET dep = (SELECT addtime(arv, '00:03:00'));
             
-            INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(train_counter, counter, arv, dep);
+            SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+			SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
+            
+            INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(train_counter, counter, arv, dep, arvTimeInt, depTimeInt);
 			
 			SET c1 = dep;
 			
@@ -71,11 +81,14 @@ BEGIN
         SET dep = st;
         SET c1 = st;
         
+        SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+        SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
+        
         -- Counter for 26 train stations and calculating their time.
         SET counter = 1;
         
         -- First record for the train starting at SOURCE station A/Z.
-        INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(train_counter, counter, arv, dep);
+        INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(train_counter, counter, arv, dep, arvTimeInt, depTimeInt);
         
         SET counter = counter + 1;
 
@@ -83,7 +96,10 @@ BEGIN
 			SET arv = (SELECT addtime(c1, '00:05:00'));
 			SET dep = (SELECT addtime(arv, '00:03:00'));
             
-            INSERT INTO trainschedule (trainId,stationId,arrivalTime,departureTime) VALUES(train_counter, counter, arv, dep);
+            SET arvTimeInt = (SELECT time_to_sec(arv) * 1000);
+			SET depTimeInt = (SELECT time_to_sec(dep) * 1000);
+            
+            INSERT INTO train_schedule (train_id,station_id,arrivaltime,departuretime,arvtime,deptime) VALUES(train_counter, counter, arv, dep, arvTimeInt, depTimeInt);
 			
 			SET c1 = dep;
 			
