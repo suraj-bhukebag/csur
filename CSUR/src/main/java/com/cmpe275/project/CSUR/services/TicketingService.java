@@ -74,6 +74,7 @@ public class TicketingService implements Ticketing {
             ticketDetails.setFromstation(ticketDetailMapper.getFrom());
             ticketDetails.setTostation(ticketDetailMapper.getTo());
             ticketDetails.setArrivaltime(ticketDetailMapper.getArivalTime());
+            ticketDetails.setTrainId(ticketDetailMapper.getTrainId());
             ticketDetails.setDepttime(ticketDetailMapper.getDeptTime());
             ticketDetails.setSequencenumber(ticketDetailMapper.getSequence());
             ticketDetails.setTicketId(ticketId);
@@ -146,6 +147,7 @@ public class TicketingService implements Ticketing {
             for(TicketDetails bookedTicketDetail : bookedTicketsDetails)
             {
                 TicketDetailMapper ticketDetailMapper = new TicketDetailMapper();
+                ticketDetailMapper.setTrainId(bookedTicketDetail.getTrainId());
                 ticketDetailMapper.setArivalTime(bookedTicketDetail.getArrivaltime());
                 ticketDetailMapper.setDeptTime(bookedTicketDetail.getDepttime());
                 ticketDetailMapper.setFrom(bookedTicketDetail.getFromstation());

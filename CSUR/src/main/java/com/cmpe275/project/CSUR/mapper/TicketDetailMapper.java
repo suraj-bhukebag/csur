@@ -8,6 +8,7 @@ public class TicketDetailMapper {
         private String from;
         private String to;
         private String deptTime;
+        @JsonProperty("arrivalTime")
         private String arivalTime;
         @JsonProperty("sequenceNumber")
         private String sequence;
