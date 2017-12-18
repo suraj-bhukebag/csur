@@ -21,8 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 @Service
 public class TicketingService implements Ticketing {
+
+
 
     @Autowired
     private TicketingRepository ticketingRepository;
@@ -34,6 +37,7 @@ public class TicketingService implements Ticketing {
     private TravellerRepository travellerRepository ;
 
     long ticketId ;
+    long capacity  = 1000 ;
 
 
 
@@ -92,7 +96,7 @@ public class TicketingService implements Ticketing {
                 runningTrains.setTrainId(ticketDetailMapper.getTrainId());
                 runningTrains.setDate(Long.parseLong(ticketMapper.getBookingDate()));
                 runningTrains.setStatus("Running");
-                runningTrains.setAvailablecount(1000 - ticketMapper.getNumberofPassenger());
+                runningTrains.setAvailablecount(capacity - ticketMapper.getNumberofPassenger());
                 runningTrains.setTicketsbooked(ticketMapper.getNumberofPassenger());
 
                 runningTrainRepository.save(runningTrains);
@@ -172,6 +176,15 @@ public class TicketingService implements Ticketing {
         }
         return response;
 
+    }
+
+    public void resetSystem(long seatCount)
+    {
+        capacity = seatCount ;
+        ticketingRepository.deleteAll();
+        ticketDetailsRepository.deleteAll();
+        travellerRepository.deleteAll();
+        runningTrainRepository.deleteAll();
     }
 
 

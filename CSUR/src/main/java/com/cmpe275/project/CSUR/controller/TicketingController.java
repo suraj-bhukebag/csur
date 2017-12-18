@@ -31,6 +31,7 @@ public class TicketingController {
     }
 
 
+
     @PostMapping(value = "/{userId}/booked")
     public ResponseEntity <String> bookTcikets(@RequestBody TicketMapper ticketmapper)
 
@@ -56,5 +57,14 @@ public class TicketingController {
         else
             return new ResponseEntity<String>("Ticket Cannot be Cancelled", HttpStatus.BAD_REQUEST);
 
+    }
+
+
+
+    @PostMapping(value = "/reset/{capacity}")
+    public ResponseEntity<String> resetSystem(@PathVariable("capacity") long capacity)
+    {
+         ticketingService.resetSystem(capacity);
+        return new ResponseEntity<String>("System is Reset with New Capacity" ,HttpStatus.OK);
     }
 }
