@@ -1,4 +1,4 @@
-package com.cmpe275.project.CSUR.dao;
+package com.cmpe275.project.dao;
 
 import com.cmpe275.project.model.Travellers;
 import org.springframework.data.repository.CrudRepository;

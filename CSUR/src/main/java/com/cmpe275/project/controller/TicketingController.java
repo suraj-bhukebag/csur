@@ -5,7 +5,7 @@ import com.cmpe275.project.services.TicketingService;
 
 
 
-import com.cmpe275.project.CSUR.mapper.TicketMapper;
+import com.cmpe275.project.mapper.TicketMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

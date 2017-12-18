@@ -1,6 +1,6 @@
 package com.cmpe275.project.services;
 
-import com.cmpe275.project.CSUR.mapper.TicketMapper;
+import com.cmpe275.project.mapper.TicketMapper;
 
 import java.util.List;
 

@@ -1,24 +1,22 @@
 package com.cmpe275.project.services;
 
-import com.cmpe275.project.CSUR.dao.RunningTrainRepository;
-import com.cmpe275.project.CSUR.dao.TicketDetailsRepository;
-import com.cmpe275.project.CSUR.dao.TravellerRepository;
-import com.cmpe275.project.CSUR.mapper.TicketDetailMapper;
-import com.cmpe275.project.CSUR.mapper.TicketMapper;
-import com.cmpe275.project.CSUR.mapper.TravellerMapper;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.cmpe275.project.model.RunningTrains;
-import com.cmpe275.project.model.Ticket;
-import com.cmpe275.project.model.Travellers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cmpe275.project.dao.RunningTrainRepository;
+import com.cmpe275.project.dao.TicketDetailsRepository;
 import com.cmpe275.project.dao.TicketingRepository;
+import com.cmpe275.project.dao.TravellerRepository;
+import com.cmpe275.project.mapper.TicketDetailMapper;
+import com.cmpe275.project.mapper.TicketMapper;
+import com.cmpe275.project.mapper.TravellerMapper;
+import com.cmpe275.project.model.RunningTrains;
+import com.cmpe275.project.model.Ticket;
 import com.cmpe275.project.model.TicketDetails;
-
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
-import java.util.List;
+import com.cmpe275.project.model.Travellers;
 
 
 
@@ -45,7 +43,7 @@ public class TicketingService implements Ticketing {
 
 
 
-    @Override
+   
     public void bookTicket(TicketMapper ticketMapper) {
 
         Ticket ticket = new Ticket();
@@ -67,7 +65,7 @@ public class TicketingService implements Ticketing {
 
     }
 
-    @Override
+
     public void bookTicketDetails(TicketMapper ticketMapper) {
         for (TicketDetailMapper ticketDetailMapper : ticketMapper.getTicketDetailMapper()) {
             TicketDetails ticketDetails = new TicketDetails();
@@ -84,7 +82,7 @@ public class TicketingService implements Ticketing {
 
     }
 
-    @Override
+
     public void runningTrain(TicketMapper ticketMapper) {
         for (TicketDetailMapper ticketDetailMapper : ticketMapper.getTicketDetailMapper()) {
 
@@ -110,7 +108,7 @@ public class TicketingService implements Ticketing {
 
     }
 
-    @Override
+
     public void travellerDetails(TicketMapper ticketMapper) {
         for(TravellerMapper passenger : ticketMapper.getTravellerMapper()){
 
@@ -125,10 +123,10 @@ public class TicketingService implements Ticketing {
 
     }
 
-    @Override
+
     public List<TicketMapper> getTickets(long userId) {
 
-        List<TicketMapper> response = new ArrayList<>();
+        List<TicketMapper> response = new ArrayList<TicketMapper>();
         List<Ticket> bookedTickets = ticketingRepository.findAllByBookedBy(userId);
         for(Ticket bookedTicket : bookedTickets)
         {
@@ -143,7 +141,7 @@ public class TicketingService implements Ticketing {
             ticket.setTravelingDate(Long.toString(bookedTicket.getTravellingdate()));
 
            List<TicketDetails> bookedTicketsDetails = ticketDetailsRepository.findAllByTicketId(bookedTicket.getId());
-           List<TicketDetailMapper> resTicketDetail = new ArrayList<>();
+           List<TicketDetailMapper> resTicketDetail = new ArrayList<TicketDetailMapper>();
             for(TicketDetails bookedTicketDetail : bookedTicketsDetails)
             {
                 TicketDetailMapper ticketDetailMapper = new TicketDetailMapper();
@@ -162,7 +160,7 @@ public class TicketingService implements Ticketing {
 
            //Traveller Details
            List<Travellers> bookedTravellers = travellerRepository.findAllByTicketId(bookedTicket.getId());
-           List<TravellerMapper> resTravellers = new ArrayList<>();
+           List<TravellerMapper> resTravellers = new ArrayList<TravellerMapper>();
            for(Travellers bookedTraveller : bookedTravellers)
            {
                TravellerMapper travellerMapper = new TravellerMapper();
@@ -190,7 +188,7 @@ public class TicketingService implements Ticketing {
     }
 
 
-    @Override
+   
     public boolean cancelTicket(long ticketId) {
         return false;
     }

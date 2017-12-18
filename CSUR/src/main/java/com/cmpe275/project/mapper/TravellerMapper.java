@@ -1,4 +1,4 @@
-package com.cmpe275.project.CSUR.mapper;
+package com.cmpe275.project.mapper;
 
 public class TravellerMapper {
 

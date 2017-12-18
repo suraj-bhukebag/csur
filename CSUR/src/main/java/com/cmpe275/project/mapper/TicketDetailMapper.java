@@ -1,4 +1,4 @@
-package com.cmpe275.project.CSUR.mapper;
+package com.cmpe275.project.mapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
