@@ -35,6 +35,7 @@ public class UserService {
 		} else {
 			if (passwordEncoder.matches(userRequest.getPassword(),
 					user.getPassword())) {
+				signinResponse.setUser(user);
 				signinResponse.setLoggedIn(true);
 				signinResponse.setCode(200);
 				signinResponse.setMsg("Login Successful.");

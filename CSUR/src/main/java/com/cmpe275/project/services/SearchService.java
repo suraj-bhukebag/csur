@@ -1,8 +1,12 @@
 package com.cmpe275.project.services;
 
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +15,10 @@ import com.cmpe275.project.dao.RunningTrainsDao;
 import com.cmpe275.project.dao.SearchRepository;
 import com.cmpe275.project.dao.StationDao;
 import com.cmpe275.project.dao.TrainDao;
+import com.cmpe275.project.mapper.Connection;
 import com.cmpe275.project.mapper.SearchCriteria;
 import com.cmpe275.project.mapper.SearchResults;
+import com.cmpe275.project.mapper.TrainSearchResponse;
 import com.cmpe275.project.model.RunningTrains;
 import com.cmpe275.project.model.Train;
 import com.cmpe275.project.model.TrainSchedule;
@@ -32,71 +38,106 @@ public class SearchService {
 	@Autowired
 	private StationDao stationDao;
 
-	public List<SearchResults> searchTrains(SearchCriteria searchCriteria) {
+	public TrainSearchResponse searchTrains(SearchCriteria searchCriteria) {
 
+		boolean noResults = true;
+		TrainSearchResponse trainSearchResponse = new TrainSearchResponse();
 		List<SearchResults> searchResults = new ArrayList<SearchResults>();
 		if (!searchCriteria.getTrainType().equalsIgnoreCase("A")) {
-			List<BigInteger> trainIds = null;
+			List<BigInteger> trainIds = new ArrayList<BigInteger>();
 			List<Train> expressTrains = new ArrayList<Train>();
 			List<Train> regularTrains = new ArrayList<Train>();
 			if (searchCriteria.isExact()) {
 				trainIds = searchRepository.findTrainsByFromToDepTimeEq(
 						Long.valueOf(searchCriteria.getFrom()),
 						Long.valueOf(searchCriteria.getTo()),
-						searchCriteria.getDepartureTime());
+						timToMilliSeconds(searchCriteria.getDepartureTime()));
 			} else {
 				trainIds = searchRepository.findTrainsByFromToDepTimeGt(
 						Long.valueOf(searchCriteria.getFrom()),
 						Long.valueOf(searchCriteria.getTo()),
-						searchCriteria.getDepartureTime());
+						timToMilliSeconds(searchCriteria.getDepartureTime()));
 			}
+			System.out.println(trainIds);
+			if (trainIds.size() > 0) {
 
-			for (BigInteger trainId : trainIds) {
-				Train train = trainDao.findOne(trainId.longValue());
-				if (train.getType().equalsIgnoreCase("E")
-						&& hasSeats(train, searchCriteria.getNoOfPassengers(),
-								searchCriteria.getDepDate())) {
-					expressTrains.add(train);
+				long trainDir = Long.valueOf(searchCriteria.getFrom())
+						- Long.valueOf(searchCriteria.getTo());
+				String trainDirStr = null;
+				if (trainDir < 0) {
+					trainDirStr = "SB";
 				} else {
-					if (hasSeats(train, searchCriteria.getNoOfPassengers(),
-							searchCriteria.getDepDate())) {
-						regularTrains.add(train);
+					trainDirStr = "NB";
+				}
+				for (BigInteger trainId : trainIds) {
+					Train train = trainDao.findOne(trainId.longValue());
+					if (train.getTrainnumber().startsWith(trainDirStr)) {
+						if (train.getType().equalsIgnoreCase("E")
+								&& hasSeats(train,
+										searchCriteria.getNoOfPassengers(),
+										searchCriteria.getDepDate())) {
+							expressTrains.add(train);
+						} else {
+							if (hasSeats(train,
+									searchCriteria.getNoOfPassengers(),
+									searchCriteria.getDepDate())) {
+								regularTrains.add(train);
+							}
+						}
 					}
 				}
-			}
-			int i = 0;
-			if (searchCriteria.getTrainType().equalsIgnoreCase("E")) {
+				int i = 0;
+				if (searchCriteria.getTrainType().equalsIgnoreCase("E")) {
 
-				for (Train train : expressTrains) {
-					if (i < 5) {
-						searchResults.add(buildSearchResult(train,
-								searchCriteria, true));
-						i++;
-					} else {
-						break;
+					if (expressTrains.size() > 0) {
+
+						for (Train train : expressTrains) {
+							if (i < 5) {
+								searchResults.add(buildSearchResult(train,
+										searchCriteria, true));
+								i++;
+							} else {
+								break;
+							}
+						}
+
+						noResults = false;
+					}
+
+				} else {
+					if (regularTrains.size() > 0) {
+						for (Train train : regularTrains) {
+							if (i < 5) {
+								searchResults.add(buildSearchResult(train,
+										searchCriteria, false));
+								i++;
+							} else {
+								break;
+							}
+						}
+						noResults = false;
 					}
 				}
 
-			}
-			else {
-
-				for (Train train : regularTrains) {
-					if (i < 5) {
-						searchResults.add(buildSearchResult(train,
-								searchCriteria, false));
-						i++;
-					} else {
-						break;
-					}
-				}
-
+				noResults = false;
 			}
 
 		} else {
+			// any type ticket
 
 		}
 
-		return searchResults;
+		if (!noResults) {
+			trainSearchResponse.setCode(200);
+			trainSearchResponse.setMsg("Search Results");
+			
+		} else {
+			trainSearchResponse.setCode(200);
+			trainSearchResponse.setMsg("No Trains Found");
+		}
+		trainSearchResponse.setSearchResults(searchResults);
+
+		return trainSearchResponse;
 	}
 
 	private SearchResults buildSearchResult(Train train,
@@ -105,13 +146,16 @@ public class SearchService {
 		TrainSchedule trainSchedule = searchRepository
 				.findTimeByTrainAndStation(train.getId(),
 						Long.valueOf(searchCriteria.getFrom()));
-		result.setTrain(train);
+		result.setDateOfTravel(searchCriteria.getDepDate());
+		result.setPaxs(searchCriteria.getNoOfPassengers());
 		result.setArvTime(trainSchedule.getArrivaltime());
 		result.setDepTime(trainSchedule.getDeparturetime());
 		String from = stationDao
 				.findOne(Long.valueOf(searchCriteria.getFrom())).getName();
 		String to = stationDao.findOne(Long.valueOf(searchCriteria.getTo()))
 				.getName();
+		result.setConnections(buildConnection(train, searchCriteria,
+				trainSchedule, from, to));
 		result.setFrom(from);
 		result.setTo(to);
 		if (isExpress) {
@@ -124,6 +168,20 @@ public class SearchService {
 					Long.valueOf(searchCriteria.getTo())));
 		}
 		return result;
+	}
+
+	private List<Connection> buildConnection(Train train,
+			SearchCriteria searchCriteria, TrainSchedule trainSchedule,
+			String from, String to) {
+		List<Connection> connections = new ArrayList<Connection>();
+		Connection connection = new Connection();
+		connection.setTrain(train);
+		connection.setArvTime(trainSchedule.getArrivaltime());
+		connection.setDepTime(trainSchedule.getDeparturetime());
+		connection.setFrom(from);
+		connection.setTo(to);
+		connections.add(connection);
+		return connections;
 	}
 
 	private double calculateExpressPrice(long from, long to) {
@@ -156,5 +214,26 @@ public class SearchService {
 			seatsAvailable = true;
 		}
 		return seatsAvailable;
+	}
+
+	private long timToMilliSeconds(String timeString) {
+		long time = 0l;
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		// String inputString = "06:00:00";
+
+		Date date;
+		try {
+			date = sdf.parse("1970-01-01 " + timeString);
+			time = date.getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("time : " + time);
+		return time;
 	}
 }

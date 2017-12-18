@@ -3,7 +3,7 @@ package com.cmpe275.project.mapper;
 public class SearchCriteria {
 
 	private int noOfPassengers;
-	private long departureTime;
+	private String departureTime;
 	private long depDate;
 	private String from;
 	private String to;
@@ -36,11 +36,11 @@ public class SearchCriteria {
 		this.noOfPassengers = noOfPassengers;
 	}
 
-	public long getDepartureTime() {
+	public String getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(long departureTime) {
+	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
 

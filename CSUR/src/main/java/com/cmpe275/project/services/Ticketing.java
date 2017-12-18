@@ -1,12 +1,13 @@
 package com.cmpe275.project.services;
 
 import com.cmpe275.project.mapper.TicketMapper;
+import com.cmpe275.project.model.Ticket;
 
 import java.util.List;
 
 public interface Ticketing {
 
-    void bookTicket(TicketMapper ticketMapper);
+    Ticket bookTicket(TicketMapper ticketMapper);
     void bookTicketDetails(TicketMapper ticketMapper);
     void runningTrain(TicketMapper ticketMapper);
     void travellerDetails(TicketMapper ticketMapper);

@@ -1,18 +1,23 @@
 package com.cmpe275.project.controller;
 
-import com.cmpe275.project.model.TicketDetails;
-import com.cmpe275.project.services.TicketingService;
-
-
-
-import com.cmpe275.project.mapper.TicketMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cmpe275.project.mapper.TicketMapper;
+import com.cmpe275.project.mapper.TicketResponse;
+import com.cmpe275.project.model.Ticket;
+import com.cmpe275.project.services.TicketingService;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:3000")
 public class TicketingController {
 
     @Autowired
@@ -40,11 +45,15 @@ public class TicketingController {
     {
         System.out.println("Printing to Console");
         //System.out.println(ticketDetails.getArrivalTime());
-        ticketingService.bookTicket(ticketmapper);
+        Ticket ticket = ticketingService.bookTicket(ticketmapper);
         ticketingService.bookTicketDetails(ticketmapper);
         ticketingService.travellerDetails(ticketmapper);
         ticketingService.runningTrain(ticketmapper);
-        return new ResponseEntity(ticketingService.getTickets(ticketmapper.getBookedBy()), HttpStatus.OK);
+        TicketResponse ticketResponse = new TicketResponse();
+        ticketResponse.setTicket(ticket);
+        ticketResponse.setCode(200);
+        ticketResponse.setMsg("Booked Ticket Successfully");
+        return new ResponseEntity(ticketResponse, HttpStatus.OK);
     }
 
     @PostMapping(value = "/{userId}/cancel/{tickeID}")

@@ -44,7 +44,7 @@ public class TicketingService implements Ticketing {
 
 
    
-    public void bookTicket(TicketMapper ticketMapper) {
+    public Ticket bookTicket(TicketMapper ticketMapper) {
 
         Ticket ticket = new Ticket();
         ticket.setNumberofpassengers(ticketMapper.getNumberofPassenger());
@@ -61,7 +61,7 @@ public class TicketingService implements Ticketing {
 
         Ticket bookedTicket = ticketingRepository.save(ticket);
         ticketId = bookedTicket.getId();
-
+        return bookedTicket;
 
     }
 

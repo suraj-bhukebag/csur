@@ -1,6 +1,6 @@
 package com.cmpe275.project.mapper;
 
-public class GenereicResponse {
+public class GenericResponse {
 
 		private int code;
 		

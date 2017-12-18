@@ -81,11 +81,29 @@ public class UserController {
 		return res;
 	}
 	
-	@RequestMapping(path = "/signin", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> userSignin(@RequestBody User userRequest) {
+	@RequestMapping(path = "/signin/{mode}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> userSignin(@RequestBody User userRequest, @PathVariable(value = "mode") String mode) {
 
 		ResponseEntity res = null;
-		SignInResponse signinResponse = userService.userSignIn(userRequest);
+		SignInResponse signinResponse = new SignInResponse();
+		if(mode != null && !mode.equalsIgnoreCase("none")) {
+			User user = userService.findUserByEmail(userRequest.getEmail());
+			if(user != null) {
+				signinResponse.setUser(user);
+			}
+			else {				
+				user = new User();
+				user.setEmail(userRequest.getEmail());
+				signinResponse.setUser(userService.createUser(user));				
+			}
+			signinResponse.setLoggedIn(true);
+			signinResponse.setCode(200);
+			signinResponse.setMsg("Login Successful.");			
+		}
+		else {
+			signinResponse = userService.userSignIn(userRequest);
+			
+		}
 		
 		res = new ResponseEntity(signinResponse, HttpStatus.OK);
 		

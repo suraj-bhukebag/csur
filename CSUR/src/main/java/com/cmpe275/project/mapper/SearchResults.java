@@ -1,20 +1,39 @@
 package com.cmpe275.project.mapper;
 
+import java.util.List;
+
 import com.cmpe275.project.model.Train;
 
-public class SearchResults {
+public class SearchResults  {
 	
-	private Train train;
+	private List<Connection> connections;
 	private String from;
 	private String to;
 	private String arvTime;
 	private String depTime;
 	private double price;
-	public Train getTrain() {
-		return train;
+	private long dateOfTravel;
+	private long paxs;
+	
+	
+	
+	public long getPaxs() {
+		return paxs;
 	}
-	public void setTrain(Train train) {
-		this.train = train;
+	public void setPaxs(long paxs) {
+		this.paxs = paxs;
+	}
+	public long getDateOfTravel() {
+		return dateOfTravel;
+	}
+	public void setDateOfTravel(long dateOfTravel) {
+		this.dateOfTravel = dateOfTravel;
+	}
+	public List<Connection> getConnections() {
+		return connections;
+	}
+	public void setConnections(List<Connection> connections) {
+		this.connections = connections;
 	}
 	public String getArvTime() {
 		return arvTime;
