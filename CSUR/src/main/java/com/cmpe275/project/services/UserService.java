@@ -58,7 +58,7 @@ public class UserService {
 	}
 	
 	public void clearUserTable() {
-		userRepositry.clearUserTable();
+		userRepositry.deleteAll();
 	}
 
 }
