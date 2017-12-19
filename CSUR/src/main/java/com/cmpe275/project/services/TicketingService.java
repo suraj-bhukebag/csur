@@ -248,7 +248,18 @@ public class TicketingService implements Ticketing {
 
 	}
     
+    public void clearTicketingTable() {
+		ticketingRepository.deleteAll();
+	}
 
+	public void clearTicketDetailsTable() {
+		ticketingRepository.deleteAll();
+	}
+
+	public void clearTravellersTable() {
+		travellerRepository.deleteAll();
+	}
+    
 
 //    public void bookTicket(TicketMapper ticketMapper) {
 //
