@@ -16,7 +16,16 @@ public class TicketMapper {
     private String bookingDate ;
     private String tripType;
     private String travelingDate ;
-    @JsonProperty("ticketDetail")
+    private String bookingStatus;
+    public String getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
+	}
+
+	@JsonProperty("ticketDetail")
     private List<TicketDetailMapper> ticketDetailMapper;
     @JsonProperty("traveller")
     private List<TravellerMapper> travellerMapper;

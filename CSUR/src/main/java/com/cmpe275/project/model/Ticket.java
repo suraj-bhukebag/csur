@@ -25,6 +25,7 @@ public class Ticket {
 	private long numberofconnections;
 	private long bookingDate;
     private long bookedBy;
+    private String bookingstatus;
 
 //  Doubt Need to be asked
 
@@ -38,7 +39,23 @@ public class Ticket {
 //	private Set<TicketDetails> ticketdetails;
 
 
-    public Ticket(){};
+    public long getBookedBy() {
+		return bookedBy;
+	}
+
+	public void setBookedBy(long bookedBy) {
+		this.bookedBy = bookedBy;
+	}
+
+	public String getBookingstatus() {
+		return bookingstatus;
+	}
+
+	public void setBookingstatus(String bookingstatus) {
+		this.bookingstatus = bookingstatus;
+	}
+
+	public Ticket(){};
 
     public Ticket(long numberofpassengers, String source, String destination, Double totalprice, long travellingdate, String triptype, long numberofconnections, long bookingDate, long bookedBy) {
         this.numberofpassengers = numberofpassengers;

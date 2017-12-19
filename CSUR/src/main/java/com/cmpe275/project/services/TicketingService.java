@@ -58,6 +58,8 @@ public class TicketingService implements Ticketing {
         ticket.setBookingDate(Long.parseLong(ticketMapper.getBookingDate()));
         ticket.setTriptype(ticketMapper.getTripType());
         ticket.setTravellingdate(Long.parseLong(ticketMapper.getTravelingDate()));
+        // Added by manish to track Booking Status
+        ticket.setBookingstatus("a");
 
 
         //Saving Ticket Object in DB
@@ -142,6 +144,7 @@ public class TicketingService implements Ticketing {
             ticket.setPrice(bookedTicket.getTotalprice().intValue());
             ticket.setTripType(bookedTicket.getTriptype());
             ticket.setTravelingDate(Long.toString(bookedTicket.getTravellingdate()));
+            ticket.setBookingStatus(bookedTicket.getBookingstatus());
 
            List<TicketDetails> bookedTicketsDetails = ticketDetailsRepository.findAllByTicketId(bookedTicket.getId());
            List<TicketDetailMapper> resTicketDetail = new ArrayList<TicketDetailMapper>();
@@ -212,7 +215,7 @@ public class TicketingService implements Ticketing {
 			e.printStackTrace();
 		}
 		long currentDate = todayDate.getTime();
-
+//ToDo Travel Date is still Not coming correctly
 		long travelDate = ticket.getTravellingdate();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -241,9 +244,9 @@ public class TicketingService implements Ticketing {
 				return false;
 			}
 		}
-			ticketingRepository.delete(ticket);
-			ticketDetailsRepository.delete(ticketDetails);
-
+		
+		ticket.setBookingstatus("c");
+		ticketingRepository.save(ticket);
 		return true;
 
 	}

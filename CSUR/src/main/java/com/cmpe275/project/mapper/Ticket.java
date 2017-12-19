@@ -1,8 +1,5 @@
 package com.cmpe275.project.mapper;
 
-import com.cmpe275.project.model.TicketDetails;
-import com.cmpe275.project.model.Travellers;
-
 import java.util.List;
 
 public class Ticket {
@@ -15,12 +12,13 @@ public class Ticket {
     private int price ;
     private long bookedBy;
     private String bookingDate ;
-    private String tripType;
+	private String tripType;
     private String travelingDate ;
     private List<TicketDetail> ticketDetail ;
     private List<Traveller> traveller ;
+    private String bookingStatus;
 
-    public Ticket(int numberofPassenger, String source, String destination, int price, long bookedBy, String bookingDate, String tripType, String travelingDate, List<TicketDetail> ticketDetail, List<Traveller> traveller) {
+    public Ticket(int numberofPassenger, String source, String destination, int price, long bookedBy, String bookingDate, String tripType, String travelingDate, List<TicketDetail> ticketDetail, List<Traveller> traveller,String bookingStatus) {
         this.numberofPassenger = numberofPassenger;
         this.source = source;
         this.destination = destination;
@@ -31,8 +29,16 @@ public class Ticket {
         this.travelingDate = travelingDate;
         this.ticketDetail = ticketDetail;
         this.traveller = traveller;
+        this.bookingStatus = bookingStatus;
     }
 
+    public String getBookingStatus() {
+  		return bookingStatus;
+  	}
+
+  	public void setBookingStatus(String bookingStatus) {
+  		this.bookingStatus = bookingStatus;
+  	}
     public int getNumberofPassenger() {
         return numberofPassenger;
     }
