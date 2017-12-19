@@ -17,7 +17,7 @@ import com.cmpe275.project.model.Ticket;
 import com.cmpe275.project.services.TicketingService;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class TicketingController {
 
     @Autowired

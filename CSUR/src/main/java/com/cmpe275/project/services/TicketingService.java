@@ -1,6 +1,9 @@
 package com.cmpe275.project.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,12 +191,63 @@ public class TicketingService implements Ticketing {
     }
 
 
-   
-    public boolean cancelTicket(long ticketId) {
-        return false;
-    }
+    @Override
+	public boolean cancelTicket(long ticketId) {
+		Ticket ticket = ticketingRepository.findOne(ticketId);
+		TicketDetails ticketDetails = ticketDetailsRepository.findOne(ticketId);
+		if(ticket==null || ticketDetails==null)
+			return false;
 
+		String sourceStation = ticket.getSource();
 
+		// Check if Ticket is of Same Date
+		Date todayDate = new Date();
+		System.out.println(todayDate);
+		SimpleDateFormat sm = new SimpleDateFormat("MM-dd-yyyy");
+		String todaysFormattedDate = sm.format(todayDate);
+		try {
+			todayDate = sm.parse(todaysFormattedDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long currentDate = todayDate.getTime();
+
+		long travelDate = ticket.getTravellingdate();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		String currentTime = sdf.format(new Date());
+
+		long minDiffInMilliSeconds = 60 * 1 * 1000;
+
+		if (currentDate == travelDate) {
+			// Check of Train Departure time is greater then current time by
+			// at-least three hour
+			String DepTime = ticketDetails.getDepttime();
+			SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+			Date date1;
+			Date date2;
+			long difference =0;
+			try {
+				date1 = format.parse(currentTime);
+				date2 = format.parse(DepTime);
+				difference = date1.getTime() - date2.getTime();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(difference <= minDiffInMilliSeconds){	
+				
+				return false;
+			}
+		}
+			ticketingRepository.delete(ticket);
+			ticketDetailsRepository.delete(ticketDetails);
+
+		return true;
+
+	}
+    
 
 
 //    public void bookTicket(TicketMapper ticketMapper) {
