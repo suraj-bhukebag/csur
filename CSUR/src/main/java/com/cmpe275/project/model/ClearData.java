@@ -5,6 +5,7 @@ public class ClearData {
 	private boolean isRunningDataClean;
 	private boolean isTicketDataClean;
 	private boolean isUserDataClean;
+	private int capacity;
 	
 	
 	public boolean isUserDataClean() {
@@ -25,6 +26,13 @@ public class ClearData {
 	public void setTicketDataClean(boolean isTicketDataClean) {
 		this.isTicketDataClean = isTicketDataClean;
 	}
+	public int getCapacity() {
+		return capacity;
+	}
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+	
 	
 	
 }

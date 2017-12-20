@@ -296,7 +296,7 @@ public class TicketingService implements Ticketing {
 	}
 
 	public void clearTicketDetailsTable() {
-		ticketingRepository.deleteAll();
+		ticketDetailsRepository.deleteAll();
 	}
 
 	public void clearTravellersTable() {
