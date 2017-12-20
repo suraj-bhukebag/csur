@@ -4,12 +4,14 @@ public class SearchCriteria {
 
 	private int noOfPassengers;
 	private String departureTime;
+	private String returnDepartureTime;
+	private long returnDepDate;
+	private boolean isRoundtrip;
 	private long depDate;
 	private String from;
 	private String to;
 	private String trainType;
 	private int noOfConnections;
-	private String roundTrip;
 	private boolean isExact;
 
 	public boolean isExact() {
@@ -18,14 +20,6 @@ public class SearchCriteria {
 
 	public void setExact(boolean isExact) {
 		this.isExact = isExact;
-	}
-
-	public String getRoundTrip() {
-		return roundTrip;
-	}
-
-	public void setRoundTrip(String roundTrip) {
-		this.roundTrip = roundTrip;
 	}
 
 	public int getNoOfPassengers() {
@@ -83,6 +77,32 @@ public class SearchCriteria {
 	public void setDepDate(long depDate) {
 		this.depDate = depDate;
 	}
+
+	public String getReturnDepartureTime() {
+		return returnDepartureTime;
+	}
+
+	public void setReturnDepartureTime(String returnDepartureTime) {
+		this.returnDepartureTime = returnDepartureTime;
+	}
+
+	public long getReturnDepDate() {
+		return returnDepDate;
+	}
+
+	public void setReturnDepDate(long returnDepDate) {
+		this.returnDepDate = returnDepDate;
+	}
+
+	public boolean isRoundtrip() {
+		return isRoundtrip;
+	}
+
+	public void setRoundtrip(boolean isRoundtrip) {
+		this.isRoundtrip = isRoundtrip;
+	}
+	
+	
 
 	
 }
