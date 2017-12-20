@@ -9,11 +9,13 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.runner.notification.RunNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cmpe275.project.dao.RunningTrainRepository;
 import com.cmpe275.project.dao.SearchRepository;
+import com.cmpe275.project.dao.StationDao;
 import com.cmpe275.project.dao.TicketDetailsRepository;
 import com.cmpe275.project.dao.TicketingRepository;
 import com.cmpe275.project.dao.TrainScheduleRepository;
@@ -44,6 +46,8 @@ public class TrainCancellationService {
 	private TravellerRepository travellerRepository;
 	@Autowired
 	TicketingService ticketingService;
+	@Autowired
+	StationDao stationRepository;
 
 	@Autowired
 	private SearchRepository searchRepository;
@@ -53,8 +57,9 @@ public class TrainCancellationService {
 	@Autowired
 	private TrainScheduleRepository trainSchedularRepository;
 
-	public boolean cancelTrain(long trainId, long cancelDate) {
+	public boolean cancelTrain(long trainId, long cancelDate, long currentDate) {
 
+		boolean canCancel = true;
 		/*
 		 * Check if date is today's Date if Yes
 		 * 
@@ -85,21 +90,11 @@ public class TrainCancellationService {
 
 		// Check if Cancel Date is f Today Date and Time is more than three
 		// hours or not
-		Date todayDate = new Date();
-		SimpleDateFormat sm = new SimpleDateFormat("MM-dd-yyyy");
-
-		String todaysFormattedDate = sm.format(todayDate);
-		try {
-			todayDate = sm.parse(todaysFormattedDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		long currentDate = todayDate.getTime();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		String currentTime = sdf.format(new Date());
 
-		long minDiffInMilliSeconds = 60 * 3 * 1000;
+		long minDiffInSeconds = 60 * 3 * 60;
 
 		if (currentDate == cancelDate) {
 			// Check of Train Departure time is greater then current time by
@@ -112,96 +107,113 @@ public class TrainCancellationService {
 			String depTime = trainSchedule.getDeparturetime();
 
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-			Date date1;
-			Date date2;
-			long difference = 0;
+			Date currTimeInMillSec;
+			Date departimeInMillSec;
 			try {
-				date1 = format.parse(currentTime);
-				date2 = format.parse(depTime);
-				difference = date1.getTime() - date2.getTime();
-				System.out.println("Time Difference in Milli Seconds " + difference);
+				currTimeInMillSec = format.parse(currentTime);
+				long currTimeInSec = currTimeInMillSec.getTime() / 1000;
+
+				System.out.println("Current time " + currTimeInSec);
+
+				departimeInMillSec = format.parse(depTime);
+				long departTimeInSec = departimeInMillSec.getTime() / 1000;
+
+				System.out.println("deptimeInMillSec time " + departTimeInSec);
+
+				System.out.println(departTimeInSec - currTimeInSec);
+
+				if (currTimeInSec > departTimeInSec - minDiffInSeconds) {
+					canCancel = false;
+					return canCancel;
+				}
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				canCancel = false;
 			}
-			if (difference <= minDiffInMilliSeconds) {
+		}
 
-				return false;
-			} else {
-				// Set Status in running train as false
+		// Set Status in running train as false
 
+		if (canCancel) {
+			try {
 				RunningTrains runningTrain = runningTrainRepository.findRunningTrainByTrainIDAndDate(trainId,
 						cancelDate);
-				runningTrain.setStatus("c");
+				runningTrain.setStatus("C");
 
 				// Find All Ids of ticket this Train in Ticket Table
 
-			}
+				List<BigInteger> ticketIds = new ArrayList<BigInteger>();
+				List<Ticket> ticketsNeedToCancel = new ArrayList<Ticket>();
+				ticketIds = ticketingRepository.findAllByTrainId(trainId, cancelDate);
+				for (BigInteger ticketId : ticketIds) {
 
-		} else {
+					ticketsNeedToCancel.add(ticketingRepository.findOne(ticketId.longValue()));
 
-			RunningTrains runningTrain = runningTrainRepository.findRunningTrainByTrainIDAndDate(trainId, cancelDate);
-			runningTrain.setStatus("c");
-			List<BigInteger> ticketIds = new ArrayList<BigInteger>();
-			List<Ticket> ticketsNeedToCancel = new ArrayList<Ticket>();
-			ticketIds = ticketingRepository.findAllByTrainId(trainId, cancelDate);
-			for (BigInteger ticketId : ticketIds) {
-
-				ticketsNeedToCancel.add(ticketingRepository.findOne(ticketId.longValue()));
-
-			}
-
-			for (Ticket ticket : ticketsNeedToCancel) {
-				ticket.setBookingstatus("c");
-				SearchCriteria searchCriteria = buildSearchCriteria(ticket);
-				TrainSearchResponse searchResponse = searchService.searchTrains(searchCriteria);
-				if (searchResponse == null || searchResponse.getSearchResults().isEmpty())
-					return false;
-				else {
-					SearchResults searchresult = searchResponse.getSearchResults().get(0);
-					TicketMapper ticketMapper = new TicketMapper();
-					ticketMapper.setBookedBy(ticket.getBookedby());
-					ticketMapper.setBookingDate(currentDate + "");
-					ticketMapper.setBookingStatus(ticket.getBookingstatus());
-					ticketMapper.setDestination(ticket.getDestination());
-					ticketMapper.setNumberofPassenger((int) ticket.getNumberofpassengers());
-					ticketMapper.setPrice((int) Math.round(ticket.getTotalprice()));
-					ticketMapper.setSource(ticket.getSource());
-					ticketMapper.setTravelingDate(ticket.getTravellingdate() + "");
-
-					List<TicketDetailMapper> list = new ArrayList<TicketDetailMapper>();
-					List<Connection> connections = searchresult.getConnections();
-					for (Connection connection : connections) {
-						TicketDetailMapper details = new TicketDetailMapper();
-						details.setTrainId(Long.valueOf(connection.getTrain().getId()));
-						details.setArivalTime(connection.getArvTime());
-						details.setDeptTime(connection.getDepTime());
-						details.setFrom(connection.getFrom());
-						details.setTo(connection.getTo());
-						list.add(details);
-					}
-					ticketMapper.setTicketDetailMapper(list);
-
-					List<Travellers> travellers = travellerRepository.findAllByTicketId(ticket.getId());
-					List<TravellerMapper> travellerMapper = new ArrayList<TravellerMapper>();
-
-					for (Travellers traveller : travellers) {
-						TravellerMapper mapper = new TravellerMapper();
-						mapper.setName(traveller.getName());
-						mapper.setAge(traveller.getAge() + "");
-						mapper.setGender(traveller.getGender());
-						travellerMapper.add(mapper);
-					}
-					ticketMapper.setTravellerMapper(travellerMapper);
-
-					ticketingService.bookTicket(ticketMapper);
 				}
 
-			}
+				for (Ticket ticket : ticketsNeedToCancel) {
+					ticket.setBookingstatus("C");
+					runningTrain.setAvailablecount(runningTrain.getAvailablecount() + ticket.getNumberofpassengers());
+					runningTrain.setTicketsbooked(runningTrain.getTicketsbooked() - ticket.getNumberofpassengers());
+					SearchCriteria searchCriteria = buildSearchCriteria(ticket);
+					TrainSearchResponse searchResponse = searchService.searchTrains(searchCriteria);
+					if (searchResponse == null || searchResponse.getSearchResults().isEmpty())
+						return false;
+					else {
+						SearchResults searchresult = searchResponse.getSearchResults().get(0);
+						TicketMapper ticketMapper = new TicketMapper();
+						ticketMapper.setBookedBy(ticket.getBookedby());
+						ticketMapper.setBookingDate(currentDate + "");
+						ticketMapper.setBookingStatus(ticket.getBookingstatus());
+						ticketMapper.setDestination(ticket.getDestination());
+						ticketMapper.setNumberofPassenger((int) ticket.getNumberofpassengers());
+						ticketMapper.setPrice((int) Math.round(ticket.getTotalprice()));
+						ticketMapper.setTripType(ticket.getTriptype());
+						ticketMapper.setSource(ticket.getSource());
+						ticketMapper.setTravelingDate(ticket.getTravellingdate() + "");
 
+						List<TicketDetailMapper> list = new ArrayList<TicketDetailMapper>();
+						List<Connection> connections = searchresult.getConnections();
+						for (Connection connection : connections) {
+							TicketDetailMapper details = new TicketDetailMapper();
+							details.setTrainId(Long.valueOf(connection.getTrain().getId()));
+							details.setArivalTime(connection.getArvTime());
+							details.setDeptTime(connection.getDepTime());
+							details.setSequence(connection.getSequenceNumber()+"");
+							details.setFrom(connection.getFrom());
+							details.setTo(connection.getTo());
+							list.add(details);
+						}
+						ticketMapper.setTicketDetailMapper(list);
+
+						List<Travellers> travellers = travellerRepository.findAllByTicketId(ticket.getId());
+						List<TravellerMapper> travellerMapper = new ArrayList<TravellerMapper>();
+
+						for (Travellers traveller : travellers) {
+							TravellerMapper mapper = new TravellerMapper();
+							mapper.setName(traveller.getName());
+							mapper.setAge(traveller.getAge() + "");
+							mapper.setGender(traveller.getGender());
+							travellerMapper.add(mapper);
+						}
+						ticketMapper.setTravellerMapper(travellerMapper);
+
+						ticketingService.bookTicket(ticketMapper);
+						ticketingService.bookTicketDetails(ticketMapper);
+						ticketingService.travellerDetails(ticketMapper);
+						ticketingService.runningTrain(ticketMapper);
+					}
+
+				}
+
+			} catch (Exception e) {
+
+				canCancel = false;
+			}
 		}
 
-		return true;
+		return canCancel;
 
 	}
 
@@ -209,8 +221,8 @@ public class TrainCancellationService {
 		String departureTime = ticketingRepository.findDepTime(ticket.getId());
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setDepartureTime(departureTime + "");
-		searchCriteria.setFrom(ticket.getSource());
-		searchCriteria.setTo(ticket.getDestination());
+		searchCriteria.setFrom(stationRepository.findStationIdByName(ticket.getSource()));
+		searchCriteria.setTo(stationRepository.findStationIdByName(ticket.getDestination()));
 		searchCriteria.setTrainType(ticket.getTriptype());
 		searchCriteria.setNoOfPassengers((int) ticket.getNumberofpassengers());
 		return searchCriteria;

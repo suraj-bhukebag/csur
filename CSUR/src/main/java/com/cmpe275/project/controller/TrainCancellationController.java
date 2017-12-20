@@ -15,7 +15,7 @@ import com.cmpe275.project.mapper.TrainCancelRequest;
 import com.cmpe275.project.services.TrainCancellationService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class TrainCancellationController {
 	
 	
@@ -29,10 +29,10 @@ public class TrainCancellationController {
 	        System.out.println("Printing to Console");
 	        System.out.println(trainCancelRequest.getCancelDate());
 
-	        if(trainCancellationService.cancelTrain(trainCancelRequest.getTrain_id(), trainCancelRequest.getCancelDate()))
-	            return new ResponseEntity<String>("Cancelled Successfully", HttpStatus.OK);
+	        if(trainCancellationService.cancelTrain(trainCancelRequest.getTrain_id(), trainCancelRequest.getCancelDate(), trainCancelRequest.getTodayDate()))
+	            return new ResponseEntity<String>("Train Cancelled Successfully", HttpStatus.OK);
 	        else
-	            return new ResponseEntity<String>("Ticket Cannot be Cancelled", HttpStatus.BAD_REQUEST);
+	            return new ResponseEntity<String>("Train Cannot be Cancelled", HttpStatus.BAD_REQUEST);
 
 	    }
 

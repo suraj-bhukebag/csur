@@ -61,14 +61,14 @@ public class TicketingController {
         return new ResponseEntity(ticketResponse, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/{userId}/cancel/{tickeID}")
-    public ResponseEntity<String> cancleTickets(@PathVariable("userId") long tickeID)
+    @PostMapping(value = "cancel/{ticketID}/{today}")
+    public ResponseEntity<String> cancleTickets(@PathVariable("ticketID") long tickeID,@PathVariable("today") long today)
 
     {
         System.out.println("Printing to Console");
         System.out.println(tickeID);
-
-        if(ticketingService.cancelTicket(tickeID))
+        
+        if(ticketingService.cancelTicket(tickeID,today))
             return new ResponseEntity<String>("Cancelled Successfully", HttpStatus.OK);
         else
             return new ResponseEntity<String>("Ticket Cannot be Cancelled", HttpStatus.BAD_REQUEST);
@@ -77,10 +77,10 @@ public class TicketingController {
 
 
 
-    @PostMapping(value = "/reset/{capacity}")
+    /*@PostMapping(value = "/reset/{capacity}")
     public ResponseEntity<String> resetSystem(@PathVariable("capacity") long capacity)
     {
          ticketingService.resetSystem(capacity);
         return new ResponseEntity<String>("System is Reset with New Capacity" ,HttpStatus.OK);
-    }
+    }*/
 }

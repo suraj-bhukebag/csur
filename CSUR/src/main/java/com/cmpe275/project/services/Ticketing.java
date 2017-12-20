@@ -14,8 +14,6 @@ public interface Ticketing {
 
     List<TicketMapper> getTickets(long userId);
 
-    boolean cancelTicket(long ticketId) ;
-
-   // List<TicketDetails> getTickets(String userId);
+    boolean cancelTicket(long ticketId,long today);
 
 }

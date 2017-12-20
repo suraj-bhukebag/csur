@@ -4,8 +4,15 @@ public class TrainCancelRequest {
 
 	private long train_id;
 	private long cancelDate;
+	private long todayDate;
 	
 	
+	public long getTodayDate() {
+		return todayDate;
+	}
+	public void setTodayDate(long todayDate) {
+		this.todayDate = todayDate;
+	}
 	public long getTrain_id() {
 		return train_id;
 	}
