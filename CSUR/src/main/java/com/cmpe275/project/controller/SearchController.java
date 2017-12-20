@@ -25,15 +25,26 @@ public class SearchController {
 			@RequestParam(value = "noOfPassengers", required = false) Integer noOfPassengers,
 			@RequestParam(value = "departureTime", required = false) String departureTime,
 			@RequestParam(value = "depDate", required = false) String depDate,
+			@RequestParam(value = "returnDepartureTime", required = false) String returnDepartureTime,
+			@RequestParam(value = "returnDepDate", required = false) String returnDepDate,
 			@RequestParam(value = "from", required = false) String from,
 			@RequestParam(value = "to", required = false) String to,
 			@RequestParam(value = "trainType", required = false) String trainType,
 			@RequestParam(value = "noOfConnections", required = false) Integer noOfConnections,
-			@RequestParam(value = "roundTrip", required = false) String roundTrip,
-			@RequestParam(value = "isExact", required = false) boolean isExact) {
+			@RequestParam(value = "isRoundTrip", required = false) Boolean isRoundTrip,
+			@RequestParam(value = "isExact", required = false) Boolean isExact) {
 
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setDepDate(Long.valueOf(depDate));
+		if(returnDepDate != null) {
+			searchCriteria.setReturnDepDate(Long.valueOf(returnDepDate));
+		}
+		if(returnDepartureTime != null) {
+			searchCriteria.setReturnDepartureTime(returnDepartureTime);
+		}
+		if(isRoundTrip != null) {
+			searchCriteria.setRoundtrip(isRoundTrip);
+		}
 		searchCriteria.setExact(isExact);
 		searchCriteria.setNoOfPassengers(noOfPassengers);
 		searchCriteria.setNoOfConnections(noOfConnections);
@@ -41,7 +52,7 @@ public class SearchController {
 		searchCriteria.setFrom(from);
 		searchCriteria.setTo(to);
 		searchCriteria.setTrainType(trainType);
-		searchCriteria.setRoundTrip(roundTrip);
+
 
 		TrainSearchResponse results = searchService
 				.searchTrains(searchCriteria);

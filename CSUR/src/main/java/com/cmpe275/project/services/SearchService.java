@@ -40,8 +40,44 @@ public class SearchService {
 
 	public TrainSearchResponse searchTrains(SearchCriteria searchCriteria) {
 
-		boolean noResults = true;
 		TrainSearchResponse trainSearchResponse = new TrainSearchResponse();
+
+		List<SearchResults> searchResults = searchForTrain(searchCriteria);
+		List<SearchResults> returnSearchResults = new ArrayList<SearchResults>();
+		if (searchCriteria.isRoundtrip()) {
+			String from = searchCriteria.getFrom();
+			String to = searchCriteria.getTo();
+			String depTime = searchCriteria.getReturnDepartureTime();
+			long date = searchCriteria.getReturnDepDate();
+			searchCriteria.setFrom(to);
+			searchCriteria.setTo(from);
+			searchCriteria.setDepartureTime(depTime);
+			searchCriteria.setDepDate(date);
+
+			returnSearchResults = searchForTrain(searchCriteria);
+		}
+
+		if (searchCriteria.isRoundtrip() && returnSearchResults != null
+				&& !returnSearchResults.isEmpty()) {
+			trainSearchResponse.setCode(200);
+			trainSearchResponse.setMsg("Search Results");
+			trainSearchResponse.setSearchResults(searchResults);
+			trainSearchResponse.setReturnSearchResults(returnSearchResults);
+		} else if (!searchCriteria.isRoundtrip() && !searchResults.isEmpty()) {
+			trainSearchResponse.setCode(200);
+			trainSearchResponse.setMsg("Search Results");
+			trainSearchResponse.setSearchResults(searchResults);
+			trainSearchResponse.setReturnSearchResults(returnSearchResults);
+		} else {
+			trainSearchResponse.setCode(200);
+			trainSearchResponse.setMsg("No Trains Found");
+		}
+
+		return trainSearchResponse;
+	}
+
+	private List<SearchResults> searchForTrain(SearchCriteria searchCriteria) {
+
 		List<SearchResults> searchResults = new ArrayList<SearchResults>();
 		if (!searchCriteria.getTrainType().equalsIgnoreCase("A")) {
 			List<BigInteger> trainIds = new ArrayList<BigInteger>();
@@ -100,8 +136,6 @@ public class SearchService {
 								break;
 							}
 						}
-
-						noResults = false;
 					}
 
 				} else {
@@ -115,29 +149,17 @@ public class SearchService {
 								break;
 							}
 						}
-						noResults = false;
 					}
 				}
 
-				noResults = false;
 			}
 
 		} else {
 			// any type ticket
 
 		}
+		return searchResults;
 
-		if (!noResults) {
-			trainSearchResponse.setCode(200);
-			trainSearchResponse.setMsg("Search Results");
-			
-		} else {
-			trainSearchResponse.setCode(200);
-			trainSearchResponse.setMsg("No Trains Found");
-		}
-		trainSearchResponse.setSearchResults(searchResults);
-
-		return trainSearchResponse;
 	}
 
 	private SearchResults buildSearchResult(Train train,
@@ -180,6 +202,7 @@ public class SearchService {
 		connection.setDepTime(trainSchedule.getDeparturetime());
 		connection.setFrom(from);
 		connection.setTo(to);
+		connection.setSequenceNumber(1);
 		connections.add(connection);
 		return connections;
 	}

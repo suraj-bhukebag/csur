@@ -9,6 +9,16 @@ public class Connection {
 	private String to;
 	private String depTime;
 	private String arvTime;
+	private int sequenceNumber;
+	
+
+	public int getSequenceNumber() {
+		return sequenceNumber;
+	}
+
+	public void setSequenceNumber(int sequenceNumber) {
+		this.sequenceNumber = sequenceNumber;
+	}
 
 	public Train getTrain() {
 		return train;
