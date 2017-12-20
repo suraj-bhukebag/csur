@@ -113,7 +113,6 @@ public class TicketingService implements Ticketing {
 
     }
 
-
     public void travellerDetails(TicketMapper ticketMapper) {
         for(TravellerMapper passenger : ticketMapper.getTravellerMapper()){
 
