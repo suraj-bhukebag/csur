@@ -183,7 +183,7 @@ public class TrainCancellationService {
 					ticketMapper.setTicketDetailMapper(list);
 
 					List<Travellers> travellers = travellerRepository.findAllByTicketId(ticket.getId());
-					List<TravellerMapper> travellerMapper = new ArrayList<>();
+					List<TravellerMapper> travellerMapper = new ArrayList<TravellerMapper>();
 
 					for (Travellers traveller : travellers) {
 						TravellerMapper mapper = new TravellerMapper();
