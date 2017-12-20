@@ -237,8 +237,8 @@ public class TicketingService implements Ticketing {
 		ticket.setBookingstatus("C");
 		ticketingRepository.save(ticket);
 		
-		String Subject = "Your Ticket "+ ticket.getId()+" from "+ stationRepository.findStationIdByName(ticket.getSource())+ " to " 
-		+ stationRepository.findStationIdByName(ticket.getSource())+ " of " + ticket.getNumberofpassengers() + " is Cancelled";
+		String Subject = "Your Ticket "+ ticket.getId()+" from "+ ticket.getSource() + " to " 
+		+ ticket.getDestination()+ " of " + ticket.getNumberofpassengers() + " of passenger is Cancelled";
 		String emailId = userService.getUser(ticket.getBookedBy()+"").getEmail();
 		
 		emailService.sendMail(emailId, "Ticket Cancellation Notice", Subject);
