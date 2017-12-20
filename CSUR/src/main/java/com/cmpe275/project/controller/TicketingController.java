@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmpe275.project.mapper.GenericResponse;
 import com.cmpe275.project.mapper.TicketMapper;
 import com.cmpe275.project.mapper.TicketResponse;
 import com.cmpe275.project.mapper.UserTicketsResponse;
@@ -61,18 +62,25 @@ public class TicketingController {
         return new ResponseEntity(ticketResponse, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/{userId}/cancel/{tickeID}")
-    public ResponseEntity<String> cancleTickets(@PathVariable("userId") long tickeID)
+    @PostMapping(value = "cancel/{tickeId}")
+    public ResponseEntity<String> cancleTickets(@PathVariable("tickeId") long tickeID)
 
     {
         System.out.println("Printing to Console");
         System.out.println(tickeID);
 
-        if(ticketingService.cancelTicket(tickeID))
-            return new ResponseEntity<String>("Cancelled Successfully", HttpStatus.OK);
-        else
-            return new ResponseEntity<String>("Ticket Cannot be Cancelled", HttpStatus.BAD_REQUEST);
-
+        GenericResponse gr = new GenericResponse();
+        
+        if(ticketingService.cancelTicket(tickeID)){
+        	gr.setCode(200);
+        	gr.setMsg("Cancelled Successfully");
+            return new ResponseEntity(gr, HttpStatus.OK);            
+        }
+        else {
+          	gr.setCode(200);
+        	gr.setMsg("Ticket Cannot be Cancelled");
+            return new ResponseEntity(gr, HttpStatus.OK);   
+        }
     }
 
 

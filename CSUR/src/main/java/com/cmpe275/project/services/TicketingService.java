@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cmpe275.project.dao.RunningTrainRepository;
+import com.cmpe275.project.dao.StationDao;
 import com.cmpe275.project.dao.TicketDetailsRepository;
 import com.cmpe275.project.dao.TicketingRepository;
 import com.cmpe275.project.dao.TravellerRepository;
@@ -36,6 +37,9 @@ public class TicketingService implements Ticketing {
     private TicketDetailsRepository ticketDetailsRepository;
     @Autowired
     private TravellerRepository travellerRepository ;
+    
+    @Autowired
+    private StationDao stationDao;
 
     long ticketId ;
     long capacity  = 1000 ;
@@ -51,8 +55,8 @@ public class TicketingService implements Ticketing {
 
         Ticket ticket = new Ticket();
         ticket.setNumberofpassengers(ticketMapper.getNumberofPassenger());
-        ticket.setSource(ticketMapper.getSource());
-        ticket.setDestination(ticketMapper.getDestination());
+        ticket.setSource(stationDao.findOne(Long.valueOf(ticketMapper.getSource())).getName());
+        ticket.setDestination(stationDao.findOne(Long.valueOf(ticketMapper.getDestination())).getName());
         ticket.setTotalprice((double) ticketMapper.getPrice() );
         ticket.setBookedby(ticketMapper.getBookedBy());
         ticket.setBookingDate(Long.parseLong(ticketMapper.getBookingDate()));
@@ -135,6 +139,7 @@ public class TicketingService implements Ticketing {
         for(Ticket bookedTicket : bookedTickets)
         {
             TicketMapper ticket = new TicketMapper();
+            ticket.setId(bookedTicket.getId());
             ticket.setNumberofPassenger((int)bookedTicket.getNumberofpassengers());
             ticket.setBookedBy(bookedTicket.getBookedby());
             ticket.setBookingDate(Long.toString(bookedTicket.getBookingDate()));
