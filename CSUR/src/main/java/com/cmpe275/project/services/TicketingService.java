@@ -192,8 +192,6 @@ public class TicketingService implements Ticketing {
         runningTrainRepository.deleteAll();
     }
 
-
-    @Override
 	public boolean cancelTicket(long ticketId) {
 		Ticket ticket = ticketingRepository.findOne(ticketId);
 		TicketDetails ticketDetails = ticketDetailsRepository.findOne(ticketId);
