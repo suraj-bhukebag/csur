@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="train_segment_occupancy")
 public class TrainSegmentOccupancy {
 	
 	@Id
@@ -16,6 +18,15 @@ public class TrainSegmentOccupancy {
 	private long segmentid;
 	private long noofticketsbooked;
 	private Double segmentoccupancyrate;
+	
+	public TrainSegmentOccupancy(){
+		
+	}
+	
+	public TrainSegmentOccupancy(long t, Double r ){
+		trainid = t;
+		segmentoccupancyrate = r;
+	}
 	
 	public long getId() {
 		return id;

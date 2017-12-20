@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmpe275.project.dao.StationDao;
+import com.cmpe275.project.mapper.GenericResponse;
 import com.cmpe275.project.mapper.TicketMapper;
 import com.cmpe275.project.mapper.TicketResponse;
 import com.cmpe275.project.mapper.UserTicketsResponse;
@@ -76,17 +77,24 @@ public class TicketingController {
         return new ResponseEntity(ticketResponse, HttpStatus.OK);
     }
 
+
     @PostMapping(value = "cancel/{ticketID}/{today}")
     public ResponseEntity<String> cancleTickets(@PathVariable("ticketID") long tickeID,@PathVariable("today") long today)
-
     {
-        System.out.println("Printing to Console");
-        System.out.println(tickeID);
+
+
+        GenericResponse gr = new GenericResponse();
         
-        if(ticketingService.cancelTicket(tickeID,today))
-            return new ResponseEntity<String>("Cancelled Successfully", HttpStatus.OK);
-        else
-            return new ResponseEntity<String>("Ticket Cannot be Cancelled", HttpStatus.BAD_REQUEST);
+        if(ticketingService.cancelTicket(tickeID, today)){
+        	gr.setCode(200);
+        	gr.setMsg("Cancelled Successfully");
+            return new ResponseEntity(gr, HttpStatus.OK);            
+        }
+        else {
+          	gr.setCode(500);
+        	gr.setMsg("Ticket Cannot be Cancelled");
+            return new ResponseEntity(gr, HttpStatus.OK);   
+        }
 
     }
 
