@@ -20,7 +20,7 @@ import com.cmpe275.project.services.UserService;
 import com.cmpe275.project.validators.Validator;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
 	@Autowired
