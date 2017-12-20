@@ -17,6 +17,7 @@ import com.cmpe275.project.mapper.TicketMapper;
 import com.cmpe275.project.mapper.TicketResponse;
 import com.cmpe275.project.mapper.UserTicketsResponse;
 import com.cmpe275.project.model.Ticket;
+import com.cmpe275.project.services.EmailService;
 import com.cmpe275.project.services.TicketingService;
 import com.cmpe275.project.services.UserService;
 
