@@ -202,6 +202,7 @@ public class SearchService {
 		connection.setDepTime(trainSchedule.getDeparturetime());
 		connection.setFrom(from);
 		connection.setTo(to);
+		connection.setSequenceNumber(1);
 		connections.add(connection);
 		return connections;
 	}

@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmpe275.project.mapper.TicketMapper;
 import com.cmpe275.project.mapper.TicketResponse;
+import com.cmpe275.project.mapper.UserTicketsResponse;
 import com.cmpe275.project.model.Ticket;
 import com.cmpe275.project.services.TicketingService;
 
 @Controller
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TicketingController {
 
     @Autowired
@@ -34,7 +35,11 @@ public class TicketingController {
     @GetMapping(value = "/{userId}/booked")
     public ResponseEntity getTickets(@PathVariable("userId") Long userId)
     {
-        return new ResponseEntity(ticketingService.getTickets(userId), HttpStatus.OK);
+    	UserTicketsResponse userTicketsResponse = new UserTicketsResponse();
+    	userTicketsResponse.setTickets(ticketingService.getTickets(userId));
+    	userTicketsResponse.setCode(200);
+    	userTicketsResponse.setMsg("User Tickets");
+        return new ResponseEntity(userTicketsResponse, HttpStatus.OK);
     }
 
 

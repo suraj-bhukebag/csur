@@ -9,14 +9,14 @@ public class Connection {
 	private String to;
 	private String depTime;
 	private String arvTime;
-	private String sequenceNumber;
+	private int sequenceNumber;
 	
 
-	public String getSequenceNumber() {
+	public int getSequenceNumber() {
 		return sequenceNumber;
 	}
 
-	public void setSequenceNumber(String sequenceNumber) {
+	public void setSequenceNumber(int sequenceNumber) {
 		this.sequenceNumber = sequenceNumber;
 	}
 
