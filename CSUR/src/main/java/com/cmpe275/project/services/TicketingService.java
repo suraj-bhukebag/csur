@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cmpe275.project.dao.RunningTrainRepository;
+import com.cmpe275.project.dao.StationDao;
 import com.cmpe275.project.dao.TicketDetailsRepository;
 import com.cmpe275.project.dao.TicketingRepository;
 import com.cmpe275.project.dao.TrainRespository;
@@ -36,6 +37,14 @@ public class TicketingService implements Ticketing {
 	private TravellerRepository travellerRepository;
 	@Autowired
 	private TrainRespository trainRespository;
+	@Autowired
+	StationDao stationRepository;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private UserService userService;
 
 	long ticketId;
 
@@ -51,7 +60,7 @@ public class TicketingService implements Ticketing {
 		ticket.setTriptype(ticketMapper.getTripType());
 		ticket.setTravellingdate(Long.parseLong(ticketMapper.getTravelingDate()));
 		// Added by manish to track Booking Status
-		ticket.setBookingstatus("a");
+		ticket.setBookingstatus("A");
 
 		// Saving Ticket Object in DB
 
@@ -227,6 +236,13 @@ public class TicketingService implements Ticketing {
 
 		ticket.setBookingstatus("C");
 		ticketingRepository.save(ticket);
+		
+		String Subject = "Your Ticket "+ ticket.getId()+" from "+ stationRepository.findStationIdByName(ticket.getSource())+ " to " 
+		+ stationRepository.findStationIdByName(ticket.getSource())+ " of " + ticket.getNumberofpassengers() + " is Cancelled";
+		String emailId = userService.getUser(ticket.getBookedBy()+"").getEmail();
+		
+		emailService.sendMail(emailId, "Ticket Cancellation Notice", Subject);
+		
 		return true;
 
 	}

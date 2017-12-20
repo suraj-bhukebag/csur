@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmpe275.project.dao.StationDao;
 import com.cmpe275.project.mapper.TicketMapper;
 import com.cmpe275.project.mapper.TicketResponse;
 import com.cmpe275.project.mapper.UserTicketsResponse;
 import com.cmpe275.project.model.Ticket;
+import com.cmpe275.project.services.EmailService;
 import com.cmpe275.project.services.TicketingService;
+import com.cmpe275.project.services.UserService;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:3000")
@@ -23,6 +26,13 @@ public class TicketingController {
 
     @Autowired
     private TicketingService ticketingService ;
+    @Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private UserService userService;
+	@Autowired
+	StationDao stationRepository;
 
     @GetMapping(value ="/")
     @ResponseBody
@@ -58,6 +68,11 @@ public class TicketingController {
         ticketResponse.setTicket(ticket);
         ticketResponse.setCode(200);
         ticketResponse.setMsg("Booked Ticket Successfully");
+        String Subject = "Your Ticket "+ ticket.getId()+" from "+ stationRepository.findStationIdByName(ticket.getSource())+ " to " 
+				+ stationRepository.findStationIdByName(ticket.getSource())+ " of " + ticket.getNumberofpassengers() + " is Booked";
+				String emailId = userService.getUser(ticket.getBookedBy()+"").getEmail();
+				
+		emailService.sendMail(emailId, "Ticket Booking Notice", Subject);
         return new ResponseEntity(ticketResponse, HttpStatus.OK);
     }
 

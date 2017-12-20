@@ -53,6 +53,12 @@ public class TrainCancellationService {
 	private SearchRepository searchRepository;
 	@Autowired
 	SearchService searchService;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private TrainScheduleRepository trainSchedularRepository;
@@ -154,6 +160,11 @@ public class TrainCancellationService {
 
 				for (Ticket ticket : ticketsNeedToCancel) {
 					ticket.setBookingstatus("C");
+					String Subject = "Your Ticket "+ ticket.getId()+" from "+ stationRepository.findStationIdByName(ticket.getSource())+ " to " 
+							+ stationRepository.findStationIdByName(ticket.getSource())+ " of " + ticket.getNumberofpassengers() + " is Cancelled";
+							String emailId = userService.getUser(ticket.getBookedBy()+"").getEmail();
+							
+					emailService.sendMail(emailId, "Ticket Cancellation Notice", Subject);
 					runningTrain.setAvailablecount(runningTrain.getAvailablecount() + ticket.getNumberofpassengers());
 					runningTrain.setTicketsbooked(runningTrain.getTicketsbooked() - ticket.getNumberofpassengers());
 					SearchCriteria searchCriteria = buildSearchCriteria(ticket);
@@ -198,11 +209,16 @@ public class TrainCancellationService {
 							travellerMapper.add(mapper);
 						}
 						ticketMapper.setTravellerMapper(travellerMapper);
-
-						ticketingService.bookTicket(ticketMapper);
+						
+						Ticket newTicket = ticketingService.bookTicket(ticketMapper);
 						ticketingService.bookTicketDetails(ticketMapper);
 						ticketingService.travellerDetails(ticketMapper);
 						ticketingService.runningTrain(ticketMapper);
+						String SubjectBooked = "Your Ticket "+ newTicket.getId()+" from "+ stationRepository.findStationIdByName(newTicket.getSource())+ " to " 
+									+ stationRepository.findStationIdByName(newTicket.getSource())+ " of " + newTicket.getNumberofpassengers() + " is Booked";
+						
+						emailService.sendMail(emailId, "Ticket Booking Notice", SubjectBooked);
+						
 					}
 
 				}
