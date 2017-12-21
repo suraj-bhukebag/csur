@@ -9,6 +9,6 @@ import com.cmpe275.project.model.Train;
 public interface TrainRespository extends CrudRepository<Train,Long> {
  
 	@Query(value = "select rt.availablecount from  ticketdetails td,running_trains rt  where  td.train_id = rt.train_id  and td.train_id = ?1", nativeQuery = true)
-	public long getCapacity(@Param("train_id") long train_id);
+	public Long getCapacity(@Param("train_id") long train_id);
 			
 }
