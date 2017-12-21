@@ -19,6 +19,7 @@ import com.cmpe275.project.dao.RunningTrainRepository;
 import com.cmpe275.project.dao.StationDao;
 import com.cmpe275.project.dao.TicketDetailsRepository;
 import com.cmpe275.project.dao.TicketingRepository;
+import com.cmpe275.project.dao.TrainDao;
 import com.cmpe275.project.dao.TrainRespository;
 import com.cmpe275.project.dao.TravellerRepository;
 import com.cmpe275.project.mapper.TicketDetailMapper;
@@ -46,6 +47,9 @@ public class TicketingService implements Ticketing {
 	private TrainRespository trainRespository;
 	@Autowired
 	StationDao stationRepository;
+	
+	@Autowired
+	private TrainDao trainDao;
 
 	@Autowired
 	private EmailService emailService;
@@ -107,13 +111,16 @@ public class TicketingService implements Ticketing {
 				List<Object[]> objects = new ArrayList<Object[]>();
 				objects = ticketDetailsRepository.findTrainDetails(ticketId);
 				int counter = 0;
+				 
+				
 				for(Object[] obj: objects){
 					String src_station = obj[1].toString();
 					String dest_station = obj[2].toString();
-					long trainCapacity = Long.parseLong(obj[0].toString());
+					long trainCapacity = trainDao.findTrainCapacityById(Long.parseLong(obj[0].toString()));
 					long src_sid = Long.parseLong(stationRepository.findStationIdByName(src_station));
 					long dest_sid = Long.parseLong(stationRepository.findStationIdByName(dest_station));
 					System.out.println(counter);
+					System.out.println("-*--*--*--*--*-");
 					systemReportService.insertTrainSegmentOccupancyRate(
 							Long.parseLong(ticketMapper.getBookingDate()),
 							ticketMapper.getNumberofPassenger(),
