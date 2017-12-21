@@ -106,14 +106,14 @@ public class TicketingService implements Ticketing {
 		// Insert a record in the Train_Segment_Occupancy table and Train_Reservation_Report for analysis and reporting.
 				List<Object[]> objects = new ArrayList<Object[]>();
 				objects = ticketDetailsRepository.findTrainDetails(ticketId);
-				
+				int counter = 0;
 				for(Object[] obj: objects){
 					String src_station = obj[1].toString();
 					String dest_station = obj[2].toString();
 					long trainCapacity = Long.parseLong(obj[0].toString());
 					long src_sid = Long.parseLong(stationRepository.findStationIdByName(src_station));
 					long dest_sid = Long.parseLong(stationRepository.findStationIdByName(dest_station));
-					
+					System.out.println(counter);
 					systemReportService.insertTrainSegmentOccupancyRate(
 							Long.parseLong(ticketMapper.getBookingDate()),
 							ticketMapper.getNumberofPassenger(),
@@ -121,6 +121,8 @@ public class TicketingService implements Ticketing {
 							src_sid,
 							dest_sid,
 							trainCapacity);
+					
+					counter = counter + 1;
 				}
 
 	}
