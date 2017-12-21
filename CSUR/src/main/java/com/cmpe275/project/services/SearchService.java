@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -38,8 +39,8 @@ public class SearchService {
 	@Autowired
 	private StationDao stationDao;
 
-	public TrainSearchResponse searchTrains(SearchCriteria searchCriteria) {
-
+	public TrainSearchResponse searchTrains(SearchCriteria searchCriteria) {	
+		
 		TrainSearchResponse trainSearchResponse = new TrainSearchResponse();
 
 		List<SearchResults> searchResults = searchForTrain(searchCriteria);
@@ -158,6 +159,7 @@ public class SearchService {
 			// any type ticket
 
 		}
+		
 		return searchResults;
 
 	}

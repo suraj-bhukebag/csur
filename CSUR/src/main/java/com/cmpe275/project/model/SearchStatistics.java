@@ -16,7 +16,7 @@ public class SearchStatistics {
 	private long date;
 	
 	private long noofsearchrequests;
-	private long typeofsearchid;
+	//private long typeofsearchid;
 	private String typeofsearch;
 	private long timeofrequest;
 	private long timeofresponse;
@@ -39,12 +39,12 @@ public class SearchStatistics {
 	public void setNoofsearchrequests(long noofsearchrequests) {
 		this.noofsearchrequests = noofsearchrequests;
 	}
-	public long getTypeofsearchid() {
-		return typeofsearchid;
-	}
-	public void setTypeofsearchid(long typeofsearchid) {
-		this.typeofsearchid = typeofsearchid;
-	}
+//	public long getTypeofsearchid() {
+//		return typeofsearchid;
+//	}
+//	public void setTypeofsearchid(long typeofsearchid) {
+//		this.typeofsearchid = typeofsearchid;
+//	}
 	public String getTypeofsearch() {
 		return typeofsearch;
 	}

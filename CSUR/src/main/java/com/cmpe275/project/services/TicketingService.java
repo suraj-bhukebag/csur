@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ import com.cmpe275.project.model.Train;
 import com.cmpe275.project.model.Travellers;
 
 @Service
+@Transactional
 public class TicketingService implements Ticketing {
 
 	@Autowired
@@ -45,6 +48,9 @@ public class TicketingService implements Ticketing {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SystemReportService systemReportService;
 
 	long ticketId;
 
@@ -66,6 +72,13 @@ public class TicketingService implements Ticketing {
 
 		Ticket bookedTicket = ticketingRepository.save(ticket);
 		ticketId = bookedTicket.getId();
+		
+		
+//				date
+//				noofticketsbooked
+//				segmentid // destinationStationIDs
+//				segmentoccupancyrate
+		
 		return bookedTicket;
 
 	}
@@ -82,7 +95,28 @@ public class TicketingService implements Ticketing {
 			ticketDetails.setTicketId(ticketId);
 
 			ticketDetailsRepository.save(ticketDetails);
+			
 		}
+		
+		// Insert a record in the Train_Segment_Occupancy table and Train_Reservation_Report for analysis and reporting.
+				List<Object[]> objects = new ArrayList<Object[]>();
+				objects = ticketDetailsRepository.findTrainDetails(ticketId);
+				
+				for(Object[] obj: objects){
+					String src_station = obj[1].toString();
+					String dest_station = obj[2].toString();
+					long trainCapacity = Long.parseLong(obj[0].toString());
+					long src_sid = Long.parseLong(stationRepository.findStationIdByName(src_station));
+					long dest_sid = Long.parseLong(stationRepository.findStationIdByName(dest_station));
+					
+					systemReportService.insertTrainSegmentOccupancyRate(
+							Long.parseLong(ticketMapper.getBookingDate()),
+							ticketMapper.getNumberofPassenger(),
+							Long.parseLong(obj[0].toString()), // train_id
+							src_sid,
+							dest_sid,
+							trainCapacity);
+				}
 
 	}
 

@@ -1,5 +1,9 @@
 package com.cmpe275.project.controller;
 
+
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cmpe275.project.mapper.SearchCriteria;
 import com.cmpe275.project.mapper.TrainSearchResponse;
 import com.cmpe275.project.services.SearchService;
+import com.cmpe275.project.services.SystemReportService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,6 +24,9 @@ public class SearchController {
 
 	@Autowired
 	private SearchService searchService;
+	
+	@Autowired
+	private SystemReportService systemReportService;
 
 	@GetMapping(path = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchTrains(
@@ -34,6 +42,8 @@ public class SearchController {
 			@RequestParam(value = "isRoundTrip", required = false) Boolean isRoundTrip,
 			@RequestParam(value = "isExact", required = false) Boolean isExact) {
 
+		long startTimeInMillis = Calendar.getInstance().get(Calendar.MILLISECOND);
+		
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setDepDate(Long.valueOf(depDate));
 		if(returnDepDate != null) {
@@ -56,6 +66,13 @@ public class SearchController {
 
 		TrainSearchResponse results = searchService
 				.searchTrains(searchCriteria);
+		
+		// End of search request processing and sending a response.
+		long endTimeInMillis = Calendar.getInstance().get(Calendar.MILLISECOND);
+		long latency = endTimeInMillis - startTimeInMillis;
+		
+		systemReportService.insertNewSearchStatistics(startTimeInMillis, endTimeInMillis, 
+				latency, noOfConnections);
 
 		return new ResponseEntity(results, HttpStatus.OK);
 	}

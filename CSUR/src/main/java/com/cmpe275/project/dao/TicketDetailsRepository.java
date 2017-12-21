@@ -20,6 +20,9 @@ public interface TicketDetailsRepository extends CrudRepository<TicketDetails, L
     @Query(value = "select td.train_id from ticketdetails td, ticket t where t.id = td.ticket_id and td.fromstation = t.source and t.id =?1", nativeQuery = true)
    	public long findTrainId(@Param("id") long id);
     
+    @Query(value = "select td.train_id, td.fromstation, td.tostation from ticketdetails td, ticket t where t.id = td.ticket_id and td.fromstation = t.source and t.id =?1", nativeQuery = true)
+   	public List<Object[]> findTrainDetails(@Param("id") long id);
+    
 }
 
 

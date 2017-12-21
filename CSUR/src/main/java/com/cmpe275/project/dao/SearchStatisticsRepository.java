@@ -33,6 +33,13 @@ public interface SearchStatisticsRepository extends CrudRepository<SearchStatist
 			+ "GROUP BY ss.date,ss.typeofsearch "
 			+ "ORDER BY ss.date,ss.typeofsearch ", nativeQuery=true)
 	public List<Object[]> findConnectionLatency(@Param("date") long date);
+	
+	@Query(value = "SELECT ss.id, ss.noofsearchrequests, ss.typeofsearch "
+			+ "FROM search_statistics ss "
+			+ "WHERE date = ?1 "
+			+ "GROUP BY ss.id "
+			+ "ORDER BY ss.id ", nativeQuery=true)
+	public List<Object[]> getNoOfRequests(@Param("date") long date);
 
 	
 }
