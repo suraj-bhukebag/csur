@@ -69,15 +69,21 @@ public class TicketingController {
         
         long trainid = ticketmapper.getTicketDetailMapper().get(0).getTrainId();
         Ticket ticket = ticketingService.bookTicket(ticketmapper);
-       long capacity= trainRepository.getCapacity(trainid);
-       System.out.println("Capacity"+ capacity);
+       Long availability= trainRepository.getCapacity(trainid);
+       Train train = trainRepository.findOne(trainid);
+
         long noofPassenger =  ticket.getNumberofpassengers();
         TicketResponse ticketResponse = new TicketResponse();
-        if(noofPassenger >capacity){
-            ticketResponse.setCode(200);
+        if(availability != null && noofPassenger > availability){
+            ticketResponse.setCode(500);
             ticketResponse.setMsg("Ticket Can Not Be Booked, Train is already full");
         	
-        }else{
+        }
+        else if(train.getCapacity() < noofPassenger) {
+        	ticketResponse.setCode(500);
+            ticketResponse.setMsg("Ticket Can Not Be Booked, Train is already full");        	
+        }        
+        else {
         ticketingService.bookTicketDetails(ticketmapper);
         ticketingService.travellerDetails(ticketmapper);
         ticketingService.runningTrain(ticketmapper);
