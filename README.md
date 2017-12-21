@@ -13,11 +13,13 @@ You must provide a README.TXT, including
 
 # URLs of the App
 
+Application UI URL:
 http://csurtrainreservationsystem.s3-website-us-west-2.amazonaws.com/
 
+Application APIs URL:
 http://ccur.us-east-1.elasticbeanstalk.com/
 
-# Build Instructions
+# Build Instructions for API server
 
 Install dependencies
 `mvn install`
@@ -25,4 +27,11 @@ Install dependencies
 Start application server
 `mvn spring-boot:run`
 
+# Build Instructions for UI server
+
+To install all the dependencies
+`npm install`
+
+Start the UI server
+`npm start`
 
