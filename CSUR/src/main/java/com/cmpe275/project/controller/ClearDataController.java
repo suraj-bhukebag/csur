@@ -1,7 +1,6 @@
 package com.cmpe275.project.controller;
 
 import java.util.Iterator;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cmpe275.project.dao.DailyReservationReportRepository;
 import com.cmpe275.project.dao.RunningTrainRepository;
 import com.cmpe275.project.dao.SearchStatisticsRepository;
 import com.cmpe275.project.dao.TrainDao;
@@ -41,6 +41,9 @@ public class ClearDataController {
 	
 	@Autowired
 	TrainSegmentOccupancyRepository trainSegmentOccupancyRepository;
+	
+	@Autowired
+	DailyReservationReportRepository dailyReservationReportRepository;
 	
 	@Autowired
 	RunningTrainRepository runningTrainRepository;
@@ -73,6 +76,9 @@ public class ClearDataController {
     	   
     	   runningTrainRepository.deleteAll();
     	   responseString.append(" Running Train Data is Cleaned.\n ");
+    	   
+    	   dailyReservationReportRepository.deleteAll();
+    	   responseString.append(" Daily Reservation Report Data is Cleaned.\n ");
     	   
     	   Iterator<Train> trains = trainDao.findAll().iterator();
     	   while(trains.hasNext()) {
