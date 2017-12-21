@@ -1,7 +1,9 @@
 package com.cmpe275.project.services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -169,12 +171,15 @@ public class SystemReportService {
 	}
 	
 	// Method to insert rows into the Search_Statistics table
-	public void insertNewSearchStatistics(long st, long et, long latency,long noOfConnections ){
+	public void insertNewSearchStatistics(long st, long et, long latency,long noOfConnections, String today ) throws ParseException{
 		
 		SearchStatistics searchStatistics = new SearchStatistics();
-		Date date = new Date();
-		long todaysDate = date.getTime();
-		searchStatistics.setDate(todaysDate);
+//		
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//		String xString = df.format(new Date().getTime());
+//		Date newDate = df.parse(xString);
+//		System.out.println(newDate.getTime());
+		searchStatistics.setDate(Long.valueOf(today));
 		searchStatistics.setTimeofrequest(st);
 		searchStatistics.setTimeofresponse(et);
 		searchStatistics.setLatency(latency);

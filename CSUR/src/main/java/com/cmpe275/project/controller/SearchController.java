@@ -1,6 +1,7 @@
 package com.cmpe275.project.controller;
 
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,13 +35,14 @@ public class SearchController {
 			@RequestParam(value = "departureTime", required = false) String departureTime,
 			@RequestParam(value = "depDate", required = false) String depDate,
 			@RequestParam(value = "returnDepartureTime", required = false) String returnDepartureTime,
+			@RequestParam(value = "today", required = false) String today,
 			@RequestParam(value = "returnDepDate", required = false) String returnDepDate,
 			@RequestParam(value = "from", required = false) String from,
 			@RequestParam(value = "to", required = false) String to,
 			@RequestParam(value = "trainType", required = false) String trainType,
 			@RequestParam(value = "noOfConnections", required = false) Integer noOfConnections,
 			@RequestParam(value = "isRoundTrip", required = false) Boolean isRoundTrip,
-			@RequestParam(value = "isExact", required = false) Boolean isExact) {
+			@RequestParam(value = "isExact", required = false) Boolean isExact) throws ParseException {
 
 		long startTimeInMillis = Calendar.getInstance().get(Calendar.MILLISECOND);
 		
@@ -72,7 +74,7 @@ public class SearchController {
 		long latency = endTimeInMillis - startTimeInMillis;
 		
 		systemReportService.insertNewSearchStatistics(startTimeInMillis, endTimeInMillis, 
-				latency, noOfConnections);
+				latency, noOfConnections,today);
 
 		return new ResponseEntity(results, HttpStatus.OK);
 	}
