@@ -35,7 +35,7 @@ public class SearchController {
 			@RequestParam(value = "departureTime", required = false) String departureTime,
 			@RequestParam(value = "depDate", required = false) String depDate,
 			@RequestParam(value = "returnDepartureTime", required = false) String returnDepartureTime,
-			@RequestParam(value = "today", required = false) String today,
+			@RequestParam(value = "today", required = false) Long today,
 			@RequestParam(value = "returnDepDate", required = false) String returnDepDate,
 			@RequestParam(value = "from", required = false) String from,
 			@RequestParam(value = "to", required = false) String to,
