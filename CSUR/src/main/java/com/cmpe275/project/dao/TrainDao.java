@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import com.cmpe275.project.model.Train;
 
 public interface TrainDao extends CrudRepository<Train, Long> {
-	
+
 	@Query(value = "SELECT capacity FROM station WHERE id = ?1", nativeQuery = true)
 	public String findTrainCapacityById(@Param("id") long id);
 

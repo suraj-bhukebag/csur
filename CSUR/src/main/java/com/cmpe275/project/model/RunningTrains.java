@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 public class RunningTrains {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	//Coommented by Akhilesh

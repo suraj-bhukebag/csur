@@ -12,16 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmpe275.project.dao.StationDao;
+import com.cmpe275.project.dao.TrainRespository;
+import com.cmpe275.project.mapper.GenericResponse;
 import com.cmpe275.project.mapper.TicketMapper;
 import com.cmpe275.project.mapper.TicketResponse;
 import com.cmpe275.project.mapper.UserTicketsResponse;
 import com.cmpe275.project.model.Ticket;
+import com.cmpe275.project.model.Train;
 import com.cmpe275.project.services.EmailService;
 import com.cmpe275.project.services.TicketingService;
 import com.cmpe275.project.services.UserService;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class TicketingController {
 
     @Autowired
@@ -33,7 +36,10 @@ public class TicketingController {
 	private UserService userService;
 	@Autowired
 	StationDao stationRepository;
-
+	
+	@Autowired
+	TrainRespository trainRepository;
+	
     @GetMapping(value ="/")
     @ResponseBody
     public
@@ -60,11 +66,22 @@ public class TicketingController {
     {
         System.out.println("Printing to Console");
         //System.out.println(ticketDetails.getArrivalTime());
+        
+        long trainid = ticketmapper.getTicketDetailMapper().get(0).getTrainId();
         Ticket ticket = ticketingService.bookTicket(ticketmapper);
+       long capacity= trainRepository.getCapacity(trainid);
+       System.out.println("Capacity"+ capacity);
+        long noofPassenger =  ticket.getNumberofpassengers();
+        TicketResponse ticketResponse = new TicketResponse();
+        if(noofPassenger >capacity){
+            ticketResponse.setCode(200);
+            ticketResponse.setMsg("Ticket Can Not Be Booked, Train is already full");
+        	
+        }else{
         ticketingService.bookTicketDetails(ticketmapper);
         ticketingService.travellerDetails(ticketmapper);
         ticketingService.runningTrain(ticketmapper);
-        TicketResponse ticketResponse = new TicketResponse();
+        ticketResponse = new TicketResponse();
         ticketResponse.setTicket(ticket);
         ticketResponse.setCode(200);
         ticketResponse.setMsg("Booked Ticket Successfully");
@@ -73,20 +90,28 @@ public class TicketingController {
 				String emailId = userService.getUser(ticket.getBookedBy()+"").getEmail();
 				
 		emailService.sendMail(emailId, "Ticket Booking Notice", Subject);
+        }
         return new ResponseEntity(ticketResponse, HttpStatus.OK);
     }
 
+
     @PostMapping(value = "cancel/{ticketID}/{today}")
     public ResponseEntity<String> cancleTickets(@PathVariable("ticketID") long tickeID,@PathVariable("today") long today)
-
     {
-        System.out.println("Printing to Console");
-        System.out.println(tickeID);
+
+
+        GenericResponse gr = new GenericResponse();
         
-        if(ticketingService.cancelTicket(tickeID,today))
-            return new ResponseEntity<String>("Cancelled Successfully", HttpStatus.OK);
-        else
-            return new ResponseEntity<String>("Ticket Cannot be Cancelled", HttpStatus.BAD_REQUEST);
+        if(ticketingService.cancelTicket(tickeID, today)){
+        	gr.setCode(200);
+        	gr.setMsg("Cancelled Successfully");
+            return new ResponseEntity(gr, HttpStatus.OK);            
+        }
+        else {
+          	gr.setCode(500);
+        	gr.setMsg("Ticket Cannot be Cancelled");
+            return new ResponseEntity(gr, HttpStatus.OK);   
+        }
 
     }
 

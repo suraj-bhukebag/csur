@@ -160,8 +160,8 @@ public class TrainCancellationService {
 
 				for (Ticket ticket : ticketsNeedToCancel) {
 					ticket.setBookingstatus("C");
-					String Subject = "Your Ticket "+ ticket.getId()+" from "+ stationRepository.findStationIdByName(ticket.getSource())+ " to " 
-							+ stationRepository.findStationIdByName(ticket.getSource())+ " of " + ticket.getNumberofpassengers() + " is Cancelled";
+					String Subject = "Your Ticket "+ ticket.getId()+" from "+ ticket.getSource()+ " to " 
+							+ ticket.getDestination()+ " of " + ticket.getNumberofpassengers() + " Number of passenger is Cancelled";
 							String emailId = userService.getUser(ticket.getBookedBy()+"").getEmail();
 							
 					emailService.sendMail(emailId, "Ticket Cancellation Notice", Subject);
@@ -214,8 +214,8 @@ public class TrainCancellationService {
 						ticketingService.bookTicketDetails(ticketMapper);
 						ticketingService.travellerDetails(ticketMapper);
 						ticketingService.runningTrain(ticketMapper);
-						String SubjectBooked = "Your Ticket "+ newTicket.getId()+" from "+ stationRepository.findStationIdByName(newTicket.getSource())+ " to " 
-									+ stationRepository.findStationIdByName(newTicket.getSource())+ " of " + newTicket.getNumberofpassengers() + " is Booked";
+						String SubjectBooked = "Your Ticket "+ newTicket.getId()+" from "+ newTicket.getSource()+ " to " 
+									+ newTicket.getDestination()+ " of " + newTicket.getNumberofpassengers() + " number of passengers is Booked";
 						
 						emailService.sendMail(emailId, "Ticket Booking Notice", SubjectBooked);
 						

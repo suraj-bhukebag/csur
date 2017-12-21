@@ -3,11 +3,15 @@ package com.cmpe275.project.services;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang.time.DateUtils;
+import org.assertj.core.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +46,10 @@ public class TicketingService implements Ticketing {
 	private TrainRespository trainRespository;
 	@Autowired
 	StationDao stationRepository;
-	
+
 	@Autowired
 	private EmailService emailService;
-	
+
 	@Autowired
 	private UserService userService;
 	
@@ -84,7 +88,8 @@ public class TicketingService implements Ticketing {
 	}
 
 	public void bookTicketDetails(TicketMapper ticketMapper) {
-		for (TicketDetailMapper ticketDetailMapper : ticketMapper.getTicketDetailMapper()) {
+		for (TicketDetailMapper ticketDetailMapper : ticketMapper
+				.getTicketDetailMapper()) {
 			TicketDetails ticketDetails = new TicketDetails();
 			ticketDetails.setFromstation(ticketDetailMapper.getFrom());
 			ticketDetails.setTostation(ticketDetailMapper.getTo());
@@ -121,25 +126,35 @@ public class TicketingService implements Ticketing {
 	}
 
 	public void runningTrain(TicketMapper ticketMapper) {
-		for (TicketDetailMapper ticketDetailMapper : ticketMapper.getTicketDetailMapper()) {
+		for (TicketDetailMapper ticketDetailMapper : ticketMapper
+				.getTicketDetailMapper()) {
 
-			long runningId = ticketDetailMapper.getTrainId() + Long.parseLong(ticketMapper.getBookingDate());
-			RunningTrains runningTrain = runningTrainRepository.findById(runningId);
-			Train train = trainRespository.findOne(ticketDetailMapper.getTrainId());
+
+			RunningTrains runningTrain = runningTrainRepository
+					.findRunningTrainByTrainIDAndDate(ticketDetailMapper
+					.getTrainId(), Long.parseLong(ticketMapper
+							.getTravelingDate()));
+			Train train = trainRespository.findOne(ticketDetailMapper
+					.getTrainId());
 			if (runningTrain == null) {
 
 				RunningTrains runningTrains = new RunningTrains();
-				runningTrains.setId(ticketDetailMapper.getTrainId() + Long.parseLong(ticketMapper.getBookingDate()));
+				
 				runningTrains.setTrainId(ticketDetailMapper.getTrainId());
-				runningTrains.setDate(Long.parseLong(ticketMapper.getTravelingDate()));
+				runningTrains.setDate(Long.parseLong(ticketMapper
+						.getTravelingDate()));
 				runningTrains.setStatus("A");
-				runningTrains.setAvailablecount(train.getCapacity() - ticketMapper.getNumberofPassenger());
-				runningTrains.setTicketsbooked(ticketMapper.getNumberofPassenger());
+				runningTrains.setAvailablecount(train.getCapacity()
+						- ticketMapper.getNumberofPassenger());
+				runningTrains.setTicketsbooked(ticketMapper
+						.getNumberofPassenger());
 
 				runningTrainRepository.save(runningTrains);
 			} else {
-				runningTrain.setAvailablecount(runningTrain.getAvailablecount() - ticketMapper.getNumberofPassenger());
-				runningTrain.setTicketsbooked(runningTrain.getTicketsbooked() + ticketMapper.getNumberofPassenger());
+				runningTrain.setAvailablecount(runningTrain.getAvailablecount()
+						- ticketMapper.getNumberofPassenger());
+				runningTrain.setTicketsbooked(runningTrain.getTicketsbooked()
+						+ ticketMapper.getNumberofPassenger());
 				runningTrainRepository.save(runningTrain);
 			}
 		}
@@ -163,29 +178,37 @@ public class TicketingService implements Ticketing {
 	public List<TicketMapper> getTickets(long userId) {
 
 		List<TicketMapper> response = new ArrayList<TicketMapper>();
-		List<Ticket> bookedTickets = ticketingRepository.findAllByBookedBy(userId);
+		List<Ticket> bookedTickets = ticketingRepository
+				.findAllByBookedBy(userId);
 		for (Ticket bookedTicket : bookedTickets) {
 			TicketMapper ticket = new TicketMapper();
-			ticket.setNumberofPassenger((int) bookedTicket.getNumberofpassengers());
+			ticket.setNumberofPassenger((int) bookedTicket
+					.getNumberofpassengers());
 			ticket.setBookedBy(bookedTicket.getBookedby());
 			ticket.setBookingDate(Long.toString(bookedTicket.getBookingDate()));
 			ticket.setSource(bookedTicket.getSource());
 			ticket.setDestination(bookedTicket.getDestination());
 			ticket.setPrice(bookedTicket.getTotalprice().intValue());
 			ticket.setTripType(bookedTicket.getTriptype());
-			ticket.setTravelingDate(Long.toString(bookedTicket.getTravellingdate()));
+			ticket.setTravelingDate(Long.toString(bookedTicket
+					.getTravellingdate()));
 			ticket.setBookingStatus(bookedTicket.getBookingstatus());
+			ticket.setId(bookedTicket.getId());
 
-			List<TicketDetails> bookedTicketsDetails = ticketDetailsRepository.findAllByTicketId(bookedTicket.getId());
+			List<TicketDetails> bookedTicketsDetails = ticketDetailsRepository
+					.findAllByTicketId(bookedTicket.getId());
 			List<TicketDetailMapper> resTicketDetail = new ArrayList<TicketDetailMapper>();
 			for (TicketDetails bookedTicketDetail : bookedTicketsDetails) {
 				TicketDetailMapper ticketDetailMapper = new TicketDetailMapper();
 				ticketDetailMapper.setTrainId(bookedTicketDetail.getTrainId());
-				ticketDetailMapper.setArivalTime(bookedTicketDetail.getArrivaltime());
-				ticketDetailMapper.setDeptTime(bookedTicketDetail.getDepttime());
+				ticketDetailMapper.setArivalTime(bookedTicketDetail
+						.getArrivaltime());
+				ticketDetailMapper
+						.setDeptTime(bookedTicketDetail.getDepttime());
 				ticketDetailMapper.setFrom(bookedTicketDetail.getFromstation());
 				ticketDetailMapper.setTo(bookedTicketDetail.getTostation());
-				ticketDetailMapper.setSequence(bookedTicketDetail.getSequencenumber());
+				ticketDetailMapper.setSequence(bookedTicketDetail
+						.getSequencenumber());
 
 				resTicketDetail.add(ticketDetailMapper);
 			}
@@ -193,7 +216,8 @@ public class TicketingService implements Ticketing {
 			ticket.setTicketDetailMapper(resTicketDetail);
 
 			// Traveller Details
-			List<Travellers> bookedTravellers = travellerRepository.findAllByTicketId(bookedTicket.getId());
+			List<Travellers> bookedTravellers = travellerRepository
+					.findAllByTicketId(bookedTicket.getId());
 			List<TravellerMapper> resTravellers = new ArrayList<TravellerMapper>();
 			for (Travellers bookedTraveller : bookedTravellers) {
 				TravellerMapper travellerMapper = new TravellerMapper();
@@ -226,13 +250,18 @@ public class TicketingService implements Ticketing {
 			return false;
 
 		long travelDate = ticket.getTravellingdate();
+		Date tDatw = new Date(travelDate);
+		Date tda = new Date(todayDate);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		String currentTime = sdf.format(new Date());
-
+		
+		if(tDatw.before(tda)) {
+			return false;
+		}
 		long minDiffInSeconds = 60 * 1 * 60;
 
-		if (todayDate == travelDate) {
+		if (isSameDay(tDatw, tda)) {
 			// Check of Train Departure time is greater then current time by
 			// at-least three hour
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -258,27 +287,43 @@ public class TicketingService implements Ticketing {
 				e.printStackTrace();
 			}
 		}
-		//Updating Booking Seat Count
-		long bookingdate = ticketingRepository.findOne(ticket.getId()).getBookingDate();
-		long noOfPassenger = ticketingRepository.findOne(ticket.getId()).getNumberofpassengers();
+		// Updating Booking Seat Count
+		long bookingdate = ticketingRepository.findOne(ticket.getId())
+				.getBookingDate();
+		long noOfPassenger = ticketingRepository.findOne(ticket.getId())
+				.getNumberofpassengers();
 		long trainId = ticketDetailsRepository.findTrainId(ticket.getId());
 		long runningId = trainId + bookingdate;
-		RunningTrains runningTrain = runningTrainRepository.findById(runningId);
+		RunningTrains runningTrain = runningTrainRepository
+				.findRunningTrainByTrainIDAndDate(trainId, travelDate);
+		
 		long alreadyBooked = runningTrain.getTicketsbooked();
 		runningTrain.setTicketsbooked(alreadyBooked - noOfPassenger);
-		runningTrain.setAvailablecount(runningTrain.getAvailablecount() + noOfPassenger);
+		runningTrain.setAvailablecount(runningTrain.getAvailablecount()
+				+ noOfPassenger);
 
 		ticket.setBookingstatus("C");
 		ticketingRepository.save(ticket);
+
 		
-		String Subject = "Your Ticket "+ ticket.getId()+" from "+ stationRepository.findStationIdByName(ticket.getSource())+ " to " 
-		+ stationRepository.findStationIdByName(ticket.getSource())+ " of " + ticket.getNumberofpassengers() + " is Cancelled";
+		String Subject = "Your Ticket "+ ticket.getId()+" from "+ ticket.getSource() + " to " 
+		+ ticket.getDestination()+ " of " + ticket.getNumberofpassengers() + " of passenger is Cancelled";
 		String emailId = userService.getUser(ticket.getBookedBy()+"").getEmail();
 		
+
 		emailService.sendMail(emailId, "Ticket Cancellation Notice", Subject);
-		
+
 		return true;
 
+	}
+
+	private boolean isSameDay(Date tDatw, Date tda) {
+		Calendar cal1 = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		cal1.setTime(tDatw);
+		cal2.setTime(tda);	
+	
+		return DateUtils.isSameDay(cal1, cal2);
 	}
 
 	public void clearTicketingTable() {
@@ -286,7 +331,7 @@ public class TicketingService implements Ticketing {
 	}
 
 	public void clearTicketDetailsTable() {
-		ticketingRepository.deleteAll();
+		ticketDetailsRepository.deleteAll();
 	}
 
 	public void clearTravellersTable() {

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +17,7 @@ import com.cmpe275.project.mapper.TrainReservationReportResponse;
 import com.cmpe275.project.services.SystemReportService;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:3000")
 public class SystemReportController {
 
 	@Autowired

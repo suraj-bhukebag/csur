@@ -72,6 +72,8 @@ public class SearchService {
 		} else {
 			trainSearchResponse.setCode(200);
 			trainSearchResponse.setMsg("No Trains Found");
+			trainSearchResponse.setSearchResults(new ArrayList<SearchResults>());
+			trainSearchResponse.setReturnSearchResults(new ArrayList<SearchResults>());
 		}
 
 		return trainSearchResponse;
@@ -138,6 +140,7 @@ public class SearchService {
 							}
 						}
 					}
+					
 
 				} else {
 					if (regularTrains.size() > 0) {
@@ -151,6 +154,7 @@ public class SearchService {
 							}
 						}
 					}
+					
 				}
 
 			}

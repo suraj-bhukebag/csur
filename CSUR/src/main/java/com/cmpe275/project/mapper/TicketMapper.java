@@ -8,7 +8,8 @@ import java.util.List;
 
 public class TicketMapper {
 
-    private int numberofPassenger ;
+	private long id;
+	private int numberofPassenger ;
     private String source;
     private String destination ;
     private int price ;
@@ -34,6 +35,13 @@ public class TicketMapper {
 
     };
 
+    public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
     public int getNumberofPassenger() {
         return numberofPassenger;
     }
